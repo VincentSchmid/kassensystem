@@ -3,3 +3,5 @@ djangorestframework
 markdown
 django-filter
 django-environ
+drf-yasg
+drf-yasg[validation]
