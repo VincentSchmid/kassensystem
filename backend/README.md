@@ -16,7 +16,7 @@ activate the newly created environement:
 ./venv/Scripts/activate
 ```
 
-install project dependecies:
+install the project dependecies:
 
 ```bash
 pip install -r requirements.txt
