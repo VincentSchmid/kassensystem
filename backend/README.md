@@ -3,6 +3,9 @@
 backend of Point of Sales system.
 
 ## Prerequisites
+Before running the server there are some things that need to be done.
+
+### Python environment
 
 Navigate to this folder and create a virutal environment (using conda or venv). One possible way of doing that:
 
@@ -28,6 +31,8 @@ Once the environement is running, install the project dependecies:
 pip install -r requirements.txt
 ```
 
+### Django Configuration
+
 finally, create the `.env` file in the `django-server` folder with following parameters (continually updating list):
 
 ```
@@ -35,6 +40,14 @@ DEBUG=True
 ```
 
 This file holds configurations that change depending on the environement the server is running in (db connection strings, secrets...).
+
+### Django initialization
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+```
 
 ## Running the server
 
