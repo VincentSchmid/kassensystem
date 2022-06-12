@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class MenuitemConfig(AppConfig):
+class ProductCatalogueConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'menuitem'
+    name = 'domain.product_catalogue'
