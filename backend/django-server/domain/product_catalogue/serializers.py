@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import MenuItem, Category, SalesTax
 
 
-
 # Sales Tax
 class SalesTaxSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,3 +21,10 @@ class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuItem
         fields = ('id', 'name', 'price')
+
+
+# Menu Item public serializer
+class MenuItemPublicSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(read_only=True)
+    price = serializers.IntegerField(read_only=True)
