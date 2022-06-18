@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'domain.product_catalogue',
     'domain.pos',
-    'drf-spectacular'
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -140,5 +140,6 @@ SPECTACULAR_SETTINGS = {
     'TITLE': 'Point of Sale API',
     'DESCRIPTION': 'point of sale system',
     'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': '/api/v[0-9]',
     'SERVE_INCLUDE_SCHEMA': False,
 }
