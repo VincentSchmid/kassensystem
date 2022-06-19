@@ -13,7 +13,12 @@ RUN pip install --no-cache-dir -r /tmp/requirements.txt \
     && rm -rf /tmp/requirements.txt
 
 WORKDIR /app
+
+COPY entrypoint.sh docker/entrypoint.sh
+COPY start.sh docker/start.sh
+RUN chmod +x docker/*.sh
+
 COPY django-server .
 
-EXPOSE 8000
-CMD ["python", "manage.py", "runserver", "8000", "--noreload"]
+ENTRYPOINT [ "docker/entrypoint.sh" ]
+CMD [ "docker/start.sh" ]

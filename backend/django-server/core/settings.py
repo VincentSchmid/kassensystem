@@ -14,7 +14,7 @@ from pathlib import Path
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, True),
+    DJANGO_DEBUG=(bool, True),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,10 +29,9 @@ environ.Env.read_env(BASE_DIR.joinpath('.env'))
 SECRET_KEY = 'django-insecure-yjon%!*t6=x9-+3$h#j$_)2d@@!9=u(nzq-0w1b&7i@!8s)9-!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env('DJANGO_DEBUG')
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'authentication',
     'domain.product_catalogue',
     'domain.pos',
     'drf_spectacular'
@@ -85,8 +85,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('POSTGRES_NAME'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': 5432,
     }
 }
 
@@ -124,7 +128,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+STATIC_ROOT = BASE_DIR.joinpath('static')
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -142,4 +146,10 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SCHEMA_PATH_PREFIX': '/api/v[0-9]',
     'SERVE_INCLUDE_SCHEMA': False,
+}
+
+ADMIN = {
+    'USERNAME': env('DJANGO_SUPERUSER_USERNAME'),
+    'EMAIL': env('DJANGO_SUPERUSER_EMAIL'),
+    'PASSWORD': env('DJANGO_SUPERUSER_PASSWORD')
 }
