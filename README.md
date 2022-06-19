@@ -33,8 +33,12 @@ localhost:3000
 
 and the backend on:
 
-```bash
-localhost:8081
+```
+localhost:8000
 ```
 
+db reachable on:
 
+```
+localhost:5432
+```
