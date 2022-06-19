@@ -1,10 +1,32 @@
 services:
+  db:
+    image: postgres
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
   backend:
     build: backend/
     image: kassensystem-backend:latest
     hostname: kassensystem-backend
+    environment:
+      - DJANGO_DEBUG=true
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@admin.ch
+      - DJANGO_SUPERUSER_PASSWORD=admin
     ports:
-      - "8081:8080"
+      - "8000:8000"
+    depends_on:
+      - db
 
   frontend:
     build: frontend/
@@ -28,3 +50,4 @@ networks:
 
 volumes:
   node-modules:
+  db-data:
