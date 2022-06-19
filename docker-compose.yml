@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: backend/
+    image: kassensystem-backend:latest
+    hostname: kassensystem-backend
+    ports:
+      - "8081:8080"
+
+  frontend:
+    build: frontend/
+    image: kassensystem-frontend:latest
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - BACKEND_ADDRESS=http://kassensystem_backend:8080
+    volumes:
+      - type: bind
+        source: ./frontend/
+        target: /app
+      - type: volume
+        source: node-modules
+        target: /app/node_modules
+    ports:
+      - "3000:3000"
+
+networks: 
+  default:
+    name: kassensystem
+
+volumes:
+  node-modules:
