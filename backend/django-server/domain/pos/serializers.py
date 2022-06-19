@@ -11,3 +11,8 @@ class OrderSerializer(WritableNestedModelSerializer, serializers.ModelSerializer
     class Meta:
         model = Order
         fields = ('id', 'menu_items')
+
+class OrderWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ('id', 'menu_items')
