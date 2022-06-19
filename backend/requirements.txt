@@ -4,6 +4,5 @@ djangorestframework
 markdown
 django-filter
 django-environ
+drf-spectacular
 psycopg2
-drf-yasg
-drf-yasg[validation]

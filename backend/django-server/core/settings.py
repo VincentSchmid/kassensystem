@@ -42,11 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
     'rest_framework',
     'authentication',
     'domain.product_catalogue',
-    'domain.pos'
+    'domain.pos',
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -128,7 +128,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
+STATIC_ROOT = BASE_DIR.joinpath('static')
 STATIC_URL = 'static/'
 
 # Default primary key field type
@@ -136,9 +136,17 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = BASE_DIR.joinpath('static')
-STATIC_URL = '/static/'
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Point of Sale API',
+    'DESCRIPTION': 'point of sale system',
+    'VERSION': '1.0.0',
+    'SCHEMA_PATH_PREFIX': '/api/v[0-9]',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
 
 ADMIN = {
     'USERNAME': env('DJANGO_SUPERUSER_USERNAME'),
