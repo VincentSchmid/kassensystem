@@ -1,7 +1,9 @@
 django
+gunicorn
 djangorestframework
 markdown
 django-filter
 django-environ
+psycopg2
 drf-yasg
 drf-yasg[validation]
