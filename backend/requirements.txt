@@ -6,3 +6,4 @@ django-filter
 django-environ
 drf-spectacular
 psycopg2
+drf-writable-nested

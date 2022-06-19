@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from .models import MenuItem, Category, SalesTax
 
+from drf_writable_nested import WritableNestedModelSerializer
+
 
 # Sales Tax
 class SalesTaxSerializer(serializers.ModelSerializer):
@@ -17,14 +19,8 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 # Menu Item
-class MenuItemSerializer(serializers.ModelSerializer):
+class MenuItemSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
+
     class Meta:
         model = MenuItem
-        fields = ('id', 'name', 'price')
-
-
-# Menu Item public serializer
-class MenuItemPublicSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(read_only=True)
-    price = serializers.IntegerField(read_only=True)
+        fields = ('id', 'name', 'price', 'category')

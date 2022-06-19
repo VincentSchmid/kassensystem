@@ -10,3 +10,10 @@ class OrderListCreateView(ListCreateAPIView):
     serializer_class = OrderSerializer
     authentication_classes =  [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
+
+
+class OrderRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    authentication_classes =  [authentication.SessionAuthentication]
+    permission_classes = [permissions.DjangoModelPermissions]
