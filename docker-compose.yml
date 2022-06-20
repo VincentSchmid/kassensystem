@@ -38,7 +38,7 @@ services:
     container_name: frontend
     environment:
       - CHOKIDAR_USEPOLLING=true
-      - BACKEND_ADDRESS=http://kassensystem_backend:8080
+      - REACT_APP_BACKEND_ADDRESS=http://kassensystem_backend:8000
     volumes:
       - type: bind
         source: ./frontend/
