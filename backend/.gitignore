@@ -130,3 +130,6 @@ dmypy.json
 
 
 install-pyenv-win.ps1
+
+# Code editor
+**/.vscode/*

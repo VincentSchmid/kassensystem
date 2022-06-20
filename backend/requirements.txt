@@ -7,3 +7,5 @@ django-environ
 drf-spectacular
 psycopg2
 drf-writable-nested
+flake8
+black
