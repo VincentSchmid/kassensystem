@@ -8,19 +8,18 @@ from drf_writable_nested import WritableNestedModelSerializer
 class SalesTaxSerializer(serializers.ModelSerializer):
     class Meta:
         model = SalesTax
-        fields = ('id', 'name', 'rate')
+        fields = ("id", "name", "rate")
 
 
 # Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ('id', 'name')
+        fields = ("id", "name")
 
 
 # Menu Item
 class MenuItemSerializer(WritableNestedModelSerializer, serializers.ModelSerializer):
-
     class Meta:
         model = MenuItem
-        fields = ('id', 'name', 'price', 'category')
+        fields = ("id", "name", "price", "category")

@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('product_catalogue', '0004_remove_menuitem_category_menuitem_category'),
-        ('pos', '0001_initial'),
+        ("product_catalogue", "0004_remove_menuitem_category_menuitem_category"),
+        ("pos", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='order',
-            name='menu_items',
-            field=models.ManyToManyField(blank=True, to='product_catalogue.menuitem'),
+            model_name="order",
+            name="menu_items",
+            field=models.ManyToManyField(blank=True, to="product_catalogue.menuitem"),
         ),
     ]
