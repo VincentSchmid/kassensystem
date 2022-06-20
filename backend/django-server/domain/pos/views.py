@@ -1,5 +1,5 @@
 from rest_framework import authentication, permissions
-from .serializers import OrderSerializer, OrderWriteSerializer
+from .serializers import OrderReadSerializer, OrderWriteSerializer
 from .models import Order
 from rest_framework import viewsets
 
@@ -12,4 +12,4 @@ class OrderViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action == "create":
             return OrderWriteSerializer
-        return OrderSerializer
+        return OrderReadSerializer

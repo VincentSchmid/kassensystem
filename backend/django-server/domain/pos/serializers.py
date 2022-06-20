@@ -5,7 +5,7 @@ from domain.product_catalogue.serializers import MenuItemSerializer
 
 
 # Oder serializer
-class OrderSerializer(serializers.ModelSerializer):
+class OrderReadSerializer(serializers.ModelSerializer):
     menu_items = MenuItemSerializer(many=True)
 
     class Meta:
