@@ -15,6 +15,9 @@ import environ
 
 env = environ.Env(
     DJANGO_DEBUG=(bool, True),
+    DJANGO_SUPERUSER_USERNAME=(str, 'admin'),
+    DJANGO_SUPERUSER_PASSWORD=(str, 'admin'),
+    DJANGO_SUPERUSER_EMAIL=(str, 'admin@admin.ch')
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
