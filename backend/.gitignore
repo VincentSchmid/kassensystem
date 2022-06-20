@@ -129,7 +129,8 @@ dmypy.json
 .pyre/
 
 
-install-pyenv-win.ps1
-
 # Code editor
 **/.vscode/*
+
+**/schema.yml
+**/static/*
