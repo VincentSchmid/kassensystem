@@ -1,31 +1,14 @@
 from rest_framework import authentication, permissions
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, RetrieveDestroyAPIView
 from .serializers import OrderSerializer, OrderWriteSerializer
 from .models import Order
+from rest_framework import viewsets
 
-
-# Order
-class OderListView(ListAPIView):
+class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    authentication_classes =  [authentication.SessionAuthentication]
+    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
-class OrderCreateView(CreateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderWriteSerializer
-    authentication_classes =  [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
-
-
-class OrderRetrieveDestroyView(RetrieveDestroyAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderSerializer
-    authentication_classes =  [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
-
-class OrderUpdateDeleteView(UpdateAPIView):
-    queryset = Order.objects.all()
-    serializer_class = OrderWriteSerializer
-    authentication_classes =  [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
+    def get_serializer_class(self):
+        if self.action == "create":
+            return OrderWriteSerializer
+        return OrderSerializer
