@@ -6,6 +6,6 @@ router = DefaultRouter()
 router.register(r"orders", OrderViewSet, basename="order")
 router.register(r"payments", PaymentViewSet, basename="payment")
 router.register(r"tables", TableViewSet, basename="table")
-router.register(r"payment_methods", PaymentMethodViewSet, basename="payment_method")
+router.register(r"payment-methods", PaymentMethodViewSet, basename="payment_method")
 
 urlpatterns = router.urls

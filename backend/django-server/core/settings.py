@@ -147,7 +147,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Point of Sale API",
     "DESCRIPTION": "point of sale system",
     "VERSION": "1.0.0",
-    "SCHEMA_PATH_PREFIX": "/api/v[0-9]",
+    "SCHEMA_PATH_PREFIX": "/api/v[0-9]/[a-zA-Z0-9-_]*/",
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
