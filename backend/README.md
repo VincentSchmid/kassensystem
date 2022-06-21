@@ -22,7 +22,7 @@ On Windows
 
 On Mac
 ```bash
-. venv/bin/activate
+.venv/bin/activate
 ```
 
 Once the environement is running, install the project dependecies:
