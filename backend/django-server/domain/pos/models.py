@@ -21,5 +21,5 @@ class Order(models.Model):
     menu_items = models.ManyToManyField(MenuItem, blank=True)
     table = models.ForeignKey(Table, on_delete=models.SET_NULL, null=True)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, null=True)
-    status = models.CharField(max_length=50)
-    total = models.IntegerField()
+    status = models.CharField(max_length=50, null=True)
+    total = models.IntegerField(default=0)
