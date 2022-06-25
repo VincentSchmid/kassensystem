@@ -45,3 +45,14 @@ class PaymentViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             return PaymentWriteSerializer
         return PaymentReadSerializer
+
+    def get_queryset(self, *args, **kwargs):
+        order_id = self.kwargs['order_pk']
+        order = Order.objects.get(id=order_id)
+
+        return self.queryset.filter(order=order)
+
+    def perform_create(self, serializer):
+        order_id = self.kwargs['order_pk']
+        order = Order.objects.get(id=order_id)
+        serializer.save(order=order)

@@ -7,5 +7,6 @@ django-environ
 drf-spectacular
 psycopg2
 drf-writable-nested
+drf-nested-routers
 flake8
 black
