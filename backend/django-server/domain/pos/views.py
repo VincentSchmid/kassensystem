@@ -1,4 +1,4 @@
-from rest_framework import authentication, permissions
+from rest_framework import authentication, permissions, viewsets, mixins, generics
 from .serializers import (
     OrderReadSerializer,
     OrderWriteSerializer,
@@ -8,7 +8,6 @@ from .serializers import (
     PaymentWriteSerializer,
 )
 from .models import Order, Table, Payment, PaymentMethod
-from rest_framework import viewsets
 
 
 class TableViewSet(viewsets.ModelViewSet):
@@ -36,23 +35,30 @@ class OrderViewSet(viewsets.ModelViewSet):
         return OrderReadSerializer
 
 
-class PaymentViewSet(viewsets.ModelViewSet):
+class PaymentView(
+    mixins.CreateModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView
+):
     queryset = Payment.objects.all()
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
     def get_serializer_class(self):
-        if self.action == "create":
+        if self.request.method == "POST":
             return PaymentWriteSerializer
         return PaymentReadSerializer
 
-    def get_queryset(self, *args, **kwargs):
-        order_id = self.kwargs['order_pk']
-        order = Order.objects.get(id=order_id)
-
-        return self.queryset.filter(order=order)
-
     def perform_create(self, serializer):
-        order_id = self.kwargs['order_pk']
+        order_id = self.kwargs["order_pk"]
         order = Order.objects.get(id=order_id)
         serializer.save(order=order)
+
+    def get_object(self):
+        order_id = self.kwargs["order_pk"]
+        order = Order.objects.get(id=order_id)
+        return self.queryset.get(order=order)

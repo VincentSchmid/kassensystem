@@ -16,8 +16,6 @@ class Order(models.Model):
     total = models.IntegerField(default=0)
 
 class Payment(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    payment_method = models.ForeignKey(
-        PaymentMethod, on_delete=models.SET_NULL, null=True
-    )
+    payment_method = models.OneToOneField(PaymentMethod, on_delete=models.PROTECT)
