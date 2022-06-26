@@ -11,5 +11,5 @@ router.register(r"payment-methods", PaymentMethodViewSet, basename="payment_meth
 
 urlpatterns = [
     path(r"", include(router.urls)),
-    path(r"orders/<int:order_pk>/payment/", PaymentView.as_view(), name="payment")
+    path(r"orders/<int:order_id>/payment/", PaymentView.as_view(), name="payment")
 ]

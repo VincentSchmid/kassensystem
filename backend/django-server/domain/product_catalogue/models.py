@@ -1,7 +1,8 @@
 from django.db import models
+from persistence.models import ModifiableEntity
 
 
-class SalesTax(models.Model):
+class SalesTax(ModifiableEntity):
     name = models.CharField(max_length=100)
     rate = models.DecimalField(max_digits=4, decimal_places=2)
 
@@ -13,7 +14,7 @@ class Category(models.Model):
         return self.name
 
 
-class MenuItem(models.Model):
+class MenuItem(ModifiableEntity):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
     price = models.IntegerField()

@@ -41,11 +41,10 @@ class PaymentWriteSerializer(serializers.ModelSerializer):
 class OrderReadSerializer(serializers.ModelSerializer):
     menu_items = MenuItemSerializer(many=True, read_only=True)
     table = TableSerializer(read_only=True)
-    payment = PaymentReadSerializer(read_only=True)
 
     class Meta:
         model = Order
-        fields = ("id", "menu_items", "table", "payment", "status", "total")
+        fields = ("id", "menu_items", "table", "status", "total")
 
 
 class OrderWriteSerializer(serializers.ModelSerializer):
@@ -55,10 +54,7 @@ class OrderWriteSerializer(serializers.ModelSerializer):
     table = serializers.PrimaryKeyRelatedField(
         queryset=Table.objects.all(), write_only=True
     )
-    payment = serializers.PrimaryKeyRelatedField(
-        queryset=Payment.objects.all(), write_only=True
-    )
 
     class Meta:
         model = Order
-        fields = ("id", "menu_items", "table", "payment", "status", "total")
+        fields = ("id", "menu_items", "table", "status", "total")

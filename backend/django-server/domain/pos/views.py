@@ -15,6 +15,7 @@ class TableViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
     serializer_class = TableSerializer
+    http_method_names = ["get", "post", "delete"]
 
 
 class PaymentMethodViewSet(viewsets.ModelViewSet):
@@ -22,6 +23,7 @@ class PaymentMethodViewSet(viewsets.ModelViewSet):
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
     serializer_class = PaymentMethodSerializer
+    http_method_names = ["get", "post", "delete"]
 
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -41,6 +43,7 @@ class PaymentView(
     queryset = Payment.objects.all()
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
+    order_param = "order_id"
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -54,11 +57,11 @@ class PaymentView(
         return PaymentReadSerializer
 
     def perform_create(self, serializer):
-        order_id = self.kwargs["order_pk"]
+        order_id = self.kwargs[self.order_param]
         order = Order.objects.get(id=order_id)
         serializer.save(order=order)
 
     def get_object(self):
-        order_id = self.kwargs["order_pk"]
+        order_id = self.kwargs[self.order_param]
         order = Order.objects.get(id=order_id)
-        return self.queryset.get(order=order)
+        return self.queryset.filter(order=order).first()

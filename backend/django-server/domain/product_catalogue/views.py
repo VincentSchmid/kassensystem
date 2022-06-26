@@ -1,6 +1,9 @@
-from rest_framework import authentication, permissions
+from rest_framework import authentication, permissions, viewsets, status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from .serializers import MenuItemSerializer, CategorySerializer, SalesTaxSerializer
+from django.utils import timezone
+from rest_framework.response import Response
+
 from .models import MenuItem, Category, SalesTax
 
 
@@ -35,15 +38,32 @@ class CategoryRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 
 
 # Menu Item
-class MenuItemListCreateView(ListCreateAPIView):
-    queryset = MenuItem.objects.all()
+class MenuItemViewSet(viewsets.ModelViewSet):
     serializer_class = MenuItemSerializer
     authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
+    http_method_names = ["get", "post", "delete", "put"]
 
+    def update(self, request, *args, **kwargs):
+        now = timezone.now()
+        current = self.get_queryset().get(id=kwargs["pk"])
+        current.valid_to = now
+        current.save()
 
-class MenuItemRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
-    queryset = MenuItem.objects.all()
-    serializer_class = MenuItemSerializer
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
+        return self.create(request)
+
+    def destroy(self, request, *args, **kwargs):
+        now = timezone.now()
+        current = self.get_queryset().get(id=kwargs["pk"])
+        current.valid_to = now
+        current.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get_queryset(self):
+        queryset = MenuItem.objects.all()
+
+        if self.action == "list":
+            return queryset.filter(valid_to__gt=timezone.now())
+
+        return queryset

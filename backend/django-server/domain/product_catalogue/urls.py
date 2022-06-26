@@ -1,8 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import SimpleRouter
 from .views import *
 
+router = SimpleRouter()
+
+router.register(r"menu-items", MenuItemViewSet, basename="menu-item")
 
 urlpatterns = [
+    path(r"", include(router.urls)),
     path("sales-tax/", SalesTaxListCreateView.as_view(), name="sales-tax-list"),
     path(
         "sales-tax/<int:pk>/",
@@ -14,11 +19,5 @@ urlpatterns = [
         "category/<int:pk>/",
         CategoryRetrieveUpdateDestroyView.as_view(),
         name="category-detail",
-    ),
-    path("menu-item/", MenuItemListCreateView.as_view(), name="menuitem-list"),
-    path(
-        "menu-item/<int:pk>/",
-        MenuItemRetrieveUpdateDestroyView.as_view(),
-        name="menuitem-detail",
-    ),
+    )
 ]
