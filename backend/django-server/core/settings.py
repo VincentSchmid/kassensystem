@@ -13,12 +13,14 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import environ
 import dj_database_url
+import json
 
 env = environ.Env(
     DJANGO_DEBUG=(bool, True),
-    DJANGO_SUPERUSER_USERNAME=(str, "admin"),
-    DJANGO_SUPERUSER_PASSWORD=(str, "admin"),
-    DJANGO_SUPERUSER_EMAIL=(str, "admin@admin.ch"),
+    DJANGO_ADMIN_CREDENTIALS=(
+        str,
+        '{"USERNAME": "admin", "EMAIL": "admin@admin.com", "PASSWORD": "admin"}',
+    ),
 )
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -87,9 +89,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.config(conn_max_age=600)
-}
+DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
 
 # Password validation
@@ -145,8 +145,4 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
 }
 
-ADMIN = {
-    "USERNAME": env("DJANGO_SUPERUSER_USERNAME"),
-    "EMAIL": env("DJANGO_SUPERUSER_EMAIL"),
-    "PASSWORD": env("DJANGO_SUPERUSER_PASSWORD"),
-}
+ADMIN = json.loads(env("DJANGO_ADMIN_CREDENTIALS"))
