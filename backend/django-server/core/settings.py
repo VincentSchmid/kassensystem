@@ -37,7 +37,7 @@ DEBUG = env("DJANGO_DEBUG")
 print(f"DEBUG: {DEBUG}")
 
 if DEBUG:
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = []
 else:
     ALLOWED_HOSTS = [env("DOMAIN_NAME")]
 
