@@ -10,17 +10,15 @@ postgres_ready() {
     python << END
 import sys
 
-from psycopg2 import connect
-from psycopg2.errors import OperationalError
+from psycopg import connect
+from psycopg.conninfo import conninfo_to_dict
+from psycopg.errors import OperationalError
+
+pg_uri = "${DATABASE_URL}"
+conn_dict = conninfo_to_dict(pg_uri)
 
 try:
-    connect(
-        dbname="${POSTGRES_NAME}",
-        user="${POSTGRES_USER}",
-        password="${POSTGRES_PASSWORD}",
-        host="${POSTGRES_HOST}",
-        port="5432"
-    )
+    connect(**conn_dict)
 except OperationalError:
     sys.exit(-1)
 END
