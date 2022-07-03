@@ -4,8 +4,10 @@ djangorestframework
 markdown
 django-filter
 django-environ
+dj-database-url
 drf-spectacular
 psycopg2
+psycopg[binary]
 drf-writable-nested
 drf-nested-routers
 flake8

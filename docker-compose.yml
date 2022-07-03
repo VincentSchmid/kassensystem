@@ -20,10 +20,7 @@ services:
     hostname: kassensystem-backend
     environment:
       - DJANGO_DEBUG=true
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_HOST=db
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_EMAIL=admin@admin.ch
       - DJANGO_SUPERUSER_PASSWORD=admin
