@@ -34,7 +34,7 @@ python manage.py collectstatic --noinput
 python manage.py makemigrations  
 python manage.py migrate
 
-if [ "$DJANGO_ADMIN_CREDENTIALS" ]
+if [ "$DJANGO_SUPERUSER_USERNAME" ]
 then
     python manage.py initadmin
 fi

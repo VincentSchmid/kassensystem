@@ -21,9 +21,9 @@ services:
     environment:
       - DJANGO_DEBUG=true
       - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres
-      - 'DJANGO_ADMIN_CREDENTIALS={"USERNAME": "admin", "EMAIL": "admin@admin.com", "PASSWORD": "admin"}'
-          
-
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@admin.ch
+      - DJANGO_SUPERUSER_PASSWORD=admin
     ports:
       - "8000:8000"
     depends_on:
