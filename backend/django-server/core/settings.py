@@ -35,7 +35,7 @@ SECRET_KEY = "django-insecure-yjon%!*t6=x9-+3$h#j$_)2d@@!9=u(nzq-0w1b&7i@!8s)9-!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -87,9 +87,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.config(conn_max_age=600)
-}
+DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
 
 # Password validation
