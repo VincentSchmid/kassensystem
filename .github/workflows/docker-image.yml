@@ -1,5 +1,8 @@
-on: [push]
-name: Linux_Container_Workflow
+on:
+  release:
+    types: [created]
+
+name: Deploy Dev Environment
 
 jobs:
     build-and-deploy:
