@@ -36,7 +36,7 @@ SECRET_KEY = "django-insecure-yjon%!*t6=x9-+3$h#j$_)2d@@!9=u(nzq-0w1b&7i@!8s)9-!
 DEBUG = env("DJANGO_DEBUG")
 print(f"DEBUG: {DEBUG}")
 
-if env("DOMAIN_NAME"):
+if env("DOMAIN_NAME") is not None:
     ALLOWED_HOSTS = [env("DOMAIN_NAME")]
 else:
     ALLOWED_HOSTS = []
