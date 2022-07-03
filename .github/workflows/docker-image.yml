@@ -35,4 +35,5 @@ jobs:
             registry-password: ${{ secrets.REGISTRY_PASSWORD }}
             secure-environment-variables: DATABASE_URL=${{ secrets.DATABASE_URL }}
             name: aci-capital-pos
+            ports: 8000
             location: 'switzerlandnorth'
