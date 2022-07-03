@@ -15,6 +15,7 @@ import environ
 import dj_database_url
 
 env = environ.Env(
+    DJANGO_ENVIRONMENT=(str, "dev"),
     DJANGO_DEBUG=(bool, True),
     DJANGO_SUPERUSER_USERNAME=(str, "admin"),
     DJANGO_SUPERUSER_PASSWORD=(str, "admin"),
@@ -36,10 +37,12 @@ SECRET_KEY = "django-insecure-yjon%!*t6=x9-+3$h#j$_)2d@@!9=u(nzq-0w1b&7i@!8s)9-!
 DEBUG = env("DJANGO_DEBUG")
 print(f"DEBUG: {DEBUG}")
 
-if DEBUG:
-    ALLOWED_HOSTS = []
+
+if (DEBUG):
+    ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = [env("DOMAIN_NAME")]
+    ALLOWED_HOSTS = [env("DJANGO_ALLOWED_HOST")]
+
 
 print(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
 
@@ -131,7 +134,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 STATIC_ROOT = BASE_DIR.joinpath("static")
 STATIC_URL = "static/"
-STATICFILES_DIRS = BASE_DIR.joinpath("static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
