@@ -20,5 +20,6 @@ RUN chmod +x docker/*.sh
 
 COPY django-server .
 
+EXPOSE 8000
 ENTRYPOINT [ "docker/entrypoint.sh" ]
 CMD [ "docker/start.sh" ]

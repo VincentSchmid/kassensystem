@@ -30,8 +30,31 @@ jobs:
             docker build ./backend/ -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
             docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
             
+        - name: Set Web App ACR authentication
+          uses: Azure/appservice-settings@v1
+          with:
+           app-name: 'app-capital-pos'
+           app-settings-json: |
+             [
+                 {
+                     "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                     "value": "${{ secrets.REGISTRY_PASSWORD }}",
+                     "slotSetting": false
+                 },
+                 {
+                     "name": "DOCKER_REGISTRY_SERVER_URL",
+                     "value": "${{ secrets.REGISTRY_LOGIN_SERVER }}",
+                     "slotSetting": false
+                 },
+                 {
+                     "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                     "value": "${{ secrets.REGISTRY_USERNAME }}",
+                     "slotSetting": false
+                 }
+             ]
+            
         - uses: azure/webapps-deploy@v2
           with:
-            app-name: ${{ env.CONTAINER_NAME }}
+            app-name: 'app-capital-pos'
             publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
             images: '${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}'
