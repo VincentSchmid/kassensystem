@@ -4,6 +4,9 @@ on:
 
 name: Deploy Dev Environment
 
+env:
+  CONTAINER_NAME: kassensystem
+
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
@@ -24,20 +27,11 @@ jobs:
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
         - run: |
-            docker build ./backend/ -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/kassensystem:${{ github.sha }}
-            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/kassensystem:${{ github.sha }}
-
-        - name: 'Deploy to Azure Container Instances'
-          uses: 'azure/aci-deploy@v1'
+            docker build ./backend/ -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}
+            
+        - uses: azure/webapps-deploy@v2
           with:
-            resource-group: ${{ secrets.RESOURCE_GROUP }}
-            dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
-            image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/kassensystem:${{ github.sha }}
-            registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-            registry-username: ${{ secrets.REGISTRY_USERNAME }}
-            registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-            environment-variables: DJANGO_DEBUG=false DOMAIN_NAME=*
-            secure-environment-variables: DATABASE_URL=${{ secrets.DATABASE_URL }} DJANGO_SUPERUSER_USERNAME=${{ secrets.DJANGO_SUPERUSER_USERNAME }} DJANGO_SUPERUSER_EMAIL=${{ secrets.DJANGO_SUPERUSER_EMAIL }} DJANGO_SUPERUSER_PASSWORD=${{ secrets.DJANGO_SUPERUSER_PASSWORD }}
-            name: aci-capital-pos
-            ports: 8000
-            location: 'switzerlandnorth'
+            app-name: ${{ env.CONTAINER_NAME }}
+            publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+            images: '${{ secrets.REGISTRY_LOGIN_SERVER }}/${{ env.CONTAINER_NAME }}:${{ github.sha }}'
