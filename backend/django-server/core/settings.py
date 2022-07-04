@@ -56,10 +56,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
     "authentication",
     "domain.product_catalogue",
     "domain.pos",
-    "drf_spectacular",
+    "drf_spectacular"
 ]
 
 MIDDLEWARE = [

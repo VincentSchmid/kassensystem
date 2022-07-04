@@ -1,6 +1,7 @@
 django
 gunicorn
 djangorestframework
+djangorestframework-simplejwt
 markdown
 django-filter
 django-environ
