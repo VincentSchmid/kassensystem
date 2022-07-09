@@ -5,6 +5,7 @@ djangorestframework-simplejwt
 markdown
 django-filter
 django-environ
+django-cors-headers
 dj-database-url
 drf-spectacular
 psycopg2

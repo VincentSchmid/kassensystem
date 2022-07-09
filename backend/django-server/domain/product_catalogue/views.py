@@ -5,6 +5,7 @@ from django.utils import timezone
 from rest_framework.response import Response
 
 from .models import MenuItem, Category, SalesTax
+from authentication.permissions import IsStaffEditorPermissions
 
 
 # Sales Tax
@@ -41,7 +42,6 @@ class CategoryRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 class MenuItemViewSet(viewsets.ModelViewSet):
     serializer_class = MenuItemSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
     http_method_names = ["get", "post", "delete", "put"]
 
     def update(self, request, *args, **kwargs):
