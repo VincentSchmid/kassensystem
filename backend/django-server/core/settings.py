@@ -37,11 +37,6 @@ SECRET_KEY = "django-insecure-yjon%!*t6=x9-+3$h#j$_)2d@@!9=u(nzq-0w1b&7i@!8s)9-!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_DEBUG")
 
-if (DEBUG):
-    ALLOWED_HOSTS = ["*"]
-else:
-    ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOST").split(",")
-
 
 # Application definition
 
@@ -75,12 +70,14 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "core.urls"
-
 CORS_URLS_REGEX = r"^/api/.*$"
 
 if (DEBUG):
+    ALLOWED_HOSTS = ["*"]
     CORS_ORIGIN_ALLOW_ALL = True
 else:
+    ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOST").split(",")
+    CSRF_TRUSTED_ORIGINS = env("DJANGO_ALLOWED_HOST").split(",")
     CORS_ALLOWED_ORIGINS = env("DJANGO_CORS_ALLOWED_ORIGIN").split(",")
 
 TEMPLATES = [
