@@ -58,7 +58,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "domain.product_catalogue",
     "domain.pos",
-    "drf_spectacular"
+    "drf_spectacular",
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -139,8 +140,21 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-STATIC_ROOT = BASE_DIR.joinpath("static")
-STATIC_URL = "static/"
+
+if (DEBUG):
+    STATIC_ROOT = BASE_DIR.joinpath("static")
+    STATIC_URL = "static/"
+else:
+    DEFAULT_FILE_STORAGE = 'core.custom_azure.AzureMediaStorage'
+    STATICFILES_STORAGE = 'core.custom_azure.AzureStaticStorage'
+
+    STATIC_LOCATION = "static"
+    MEDIA_LOCATION = "media"
+
+    AZURE_ACCOUNT_NAME = env("AZURE_ACCOUNT_NAME")
+    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -12,5 +12,6 @@ psycopg2
 psycopg[binary]
 drf-writable-nested
 drf-nested-routers
+django-storages[azure]
 flake8
 black
