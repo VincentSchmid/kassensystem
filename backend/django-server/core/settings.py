@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
     "drf_spectacular",
-    'storages',
+    "storages",
     "authentication",
     "domain.product_catalogue",
     "domain.pos",
@@ -72,12 +72,12 @@ MIDDLEWARE = [
 ROOT_URLCONF = "core.urls"
 CORS_URLS_REGEX = r"^/api/.*$"
 
-if (DEBUG):
+if DEBUG:
     ALLOWED_HOSTS = ["*"]
     CORS_ORIGIN_ALLOW_ALL = True
 else:
     ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOST").split(",")
-    CSRF_TRUSTED_ORIGINS = env("DJANGO_ALLOWED_HOST").split(",")
+    CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS").split(",")
     CORS_ALLOWED_ORIGINS = env("DJANGO_CORS_ALLOWED_ORIGIN").split(",")
 
 TEMPLATES = [
@@ -139,20 +139,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-if (DEBUG):
+if DEBUG:
     STATIC_ROOT = BASE_DIR.joinpath("static")
     STATIC_URL = "static/"
 else:
-    DEFAULT_FILE_STORAGE = 'core.custom_azure.AzureMediaStorage'
-    STATICFILES_STORAGE = 'core.custom_azure.AzureStaticStorage'
+    DEFAULT_FILE_STORAGE = "core.custom_azure.AzureMediaStorage"
+    STATICFILES_STORAGE = "core.custom_azure.AzureStaticStorage"
 
     STATIC_LOCATION = "static"
     MEDIA_LOCATION = "media"
 
     AZURE_ACCOUNT_NAME = env("AZURE_ACCOUNT_NAME")
-    AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
-    MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+    AZURE_CUSTOM_DOMAIN = f"{AZURE_ACCOUNT_NAME}.blob.core.windows.net"
+    STATIC_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
+    MEDIA_URL = f"https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -163,11 +163,9 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "rest_framework.authentication.TokenAuthentication"
+        "rest_framework.authentication.TokenAuthentication",
     ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated"
-    ],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -188,5 +186,5 @@ ADMIN = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    "AUTH_HEADER_TYPES": ("Bearer")
+    "AUTH_HEADER_TYPES": ("Bearer"),
 }
