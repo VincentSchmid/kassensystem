@@ -34,6 +34,8 @@ python manage.py collectstatic --noinput
 python manage.py makemigrations  
 python manage.py migrate
 
+python manage.py initgroups
+
 if [ "$DJANGO_SUPERUSER_USERNAME" ]
 then
     python manage.py initadmin

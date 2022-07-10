@@ -10,10 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from multiprocessing import Manager
 from pathlib import Path
 import environ
 import dj_database_url
 from datetime import timedelta
+from enum import Enum
+
 
 env = environ.Env(
     DJANGO_ENVIRONMENT=(str, "dev"),
@@ -164,7 +167,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_PERMISSION_CLASSES": ["authentication.permissions.RestrictiveDjangoModelPermissions"],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -186,4 +189,15 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_TYPES": ("Bearer"),
+}
+
+# Groups
+
+class Groups(Enum):
+    WAITER: str = "Waiter"
+    Manager: str = "Manager"
+
+GROUPS = {
+    Groups.WAITER.name: [],
+     Groups.Manager.name: []
 }
