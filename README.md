@@ -42,3 +42,16 @@ db reachable on:
 ```
 localhost:5432
 ```
+
+### Live dev environment:
+
+Backend is reachable at:
+
+```
+https://app-capital-pos.azurewebsites.net
+```
+
+Frontend is reachable at:
+```
+https://gentle-moss-0cc02bb03.1.azurestaticapps.net
+```
