@@ -26,8 +26,11 @@ class Order(models.Model):
     menu_items = models.ManyToManyField(MenuItem, blank=True)
     table = models.ForeignKey(Table, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=50, null=True)
-    total = models.IntegerField(default=0)
     waiter = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, validators=[validate_is_waiter])
+
+    @property
+    def total(self):
+        return sum([item.price for item in self.menu_items.all()])
 
 
 class Payment(models.Model):

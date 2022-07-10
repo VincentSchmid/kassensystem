@@ -70,4 +70,4 @@ class OrderWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ("id", "menu_items", "table", "waiter", "status", "total")
+        fields = ("id", "menu_items", "table", "waiter", "status")

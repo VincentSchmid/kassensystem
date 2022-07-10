@@ -1,4 +1,5 @@
-from rest_framework import authentication, permissions, viewsets, mixins, generics
+from rest_framework import viewsets, mixins, generics
+from django.db.models import Sum
 from .serializers import (
     OrderReadSerializer,
     OrderWriteSerializer,
@@ -24,7 +25,7 @@ class PaymentMethodViewSet(viewsets.ModelViewSet):
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-
+        
     def get_serializer_class(self):
         if self.action == "create":
             return OrderWriteSerializer
