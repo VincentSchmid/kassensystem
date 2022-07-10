@@ -195,9 +195,9 @@ SIMPLE_JWT = {
 
 class Groups(Enum):
     WAITER: str = "Waiter"
-    Manager: str = "Manager"
+    MANAGER: str = "Manager"
 
 GROUPS = {
-    Groups.WAITER.name: [],
-     Groups.Manager.name: []
+    Groups.WAITER.value: [],
+     Groups.MANAGER.value: []
 }
