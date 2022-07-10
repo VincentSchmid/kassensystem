@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import environ
 import dj_database_url
+from datetime import timedelta
 
 env = environ.Env(
     DJANGO_ENVIRONMENT=(str, "dev"),
@@ -35,16 +36,12 @@ SECRET_KEY = "django-insecure-yjon%!*t6=x9-+3$h#j$_)2d@@!9=u(nzq-0w1b&7i@!8s)9-!
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DJANGO_DEBUG")
-print(f"DEBUG: {DEBUG}")
-
 
 if (DEBUG):
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = [env("DJANGO_ALLOWED_HOST")]
+    ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOST").split(",")
 
-
-print(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
 
 # Application definition
 
@@ -55,16 +52,19 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
-    "authentication",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "domain.product_catalogue",
     "domain.pos",
-    "drf_spectacular",
+    "drf_spectacular"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -73,6 +73,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "core.urls"
+
+CORS_URLS_REGEX = r"^/api/.*$"
+
+if (DEBUG):
+    CORS_ORIGIN_ALLOW_ALL = True
+else:
+    CORS_ALLOWED_ORIGINS = env("DJANGO_CORS_ALLOWED_ORIGIN").split(",")
 
 TEMPLATES = [
     {
@@ -141,6 +148,14 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.TokenAuthentication"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated"
+    ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -156,4 +171,10 @@ ADMIN = {
     "USERNAME": env("DJANGO_SUPERUSER_USERNAME"),
     "EMAIL": env("DJANGO_SUPERUSER_EMAIL"),
     "PASSWORD": env("DJANGO_SUPERUSER_PASSWORD"),
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer")
 }

@@ -12,7 +12,6 @@ from .models import Order, Table, Payment, PaymentMethod
 
 class TableViewSet(viewsets.ModelViewSet):
     queryset = Table.objects.all()
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
     serializer_class = TableSerializer
     http_method_names = ["get", "post", "delete"]
@@ -20,15 +19,13 @@ class TableViewSet(viewsets.ModelViewSet):
 
 class PaymentMethodViewSet(viewsets.ModelViewSet):
     queryset = PaymentMethod.objects.all()
-    authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]
+    permission_classes = [permissions.IsAdminUser]
     serializer_class = PaymentMethodSerializer
     http_method_names = ["get", "post", "delete"]
 
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all()
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
     def get_serializer_class(self):
@@ -41,7 +38,6 @@ class PaymentView(
     mixins.CreateModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView
 ):
     queryset = Payment.objects.all()
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
     order_param = "order_id"
 
