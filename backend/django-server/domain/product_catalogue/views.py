@@ -12,14 +12,12 @@ from authentication.permissions import IsStaffEditorPermissions
 class SalesTaxListCreateView(ListCreateAPIView):
     queryset = SalesTax.objects.all()
     serializer_class = SalesTaxSerializer
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
 
 class SalesTaxRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = SalesTax.objects.all()
     serializer_class = SalesTaxSerializer
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
 
@@ -27,21 +25,18 @@ class SalesTaxRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
 class CategoryListCreateView(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
 
 class CategoryRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    authentication_classes = [authentication.SessionAuthentication]
     permission_classes = [permissions.DjangoModelPermissions]
 
 
 # Menu Item
 class MenuItemViewSet(viewsets.ModelViewSet):
     serializer_class = MenuItemSerializer
-    authentication_classes = [authentication.SessionAuthentication]
     http_method_names = ["get", "post", "delete", "put"]
 
     def update(self, request, *args, **kwargs):
