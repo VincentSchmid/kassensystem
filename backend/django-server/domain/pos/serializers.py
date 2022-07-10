@@ -67,7 +67,6 @@ class OrderWriteSerializer(serializers.ModelSerializer):
         queryset=User.objects.all(), write_only=True
     )
 
-
     class Meta:
         model = Order
         fields = ("id", "menu_items", "table", "waiter", "status")

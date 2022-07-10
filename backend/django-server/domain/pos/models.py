@@ -9,7 +9,7 @@ User = get_user_model()
 
 def validate_is_waiter(user_id):
     user = User.objects.get(id=user_id)
-    if not user.groups.filter(name=Groups.WAITER.name).exists():
+    if not user.groups.filter(name=Groups.WAITER.value).exists():
         raise ValidationError(
             (f"User with id: {user_id} is not a waiter")
         )
