@@ -40,7 +40,7 @@ DEBUG = env("DJANGO_DEBUG")
 if (DEBUG):
     ALLOWED_HOSTS = ["*"]
 else:
-    ALLOWED_HOSTS = [env("DJANGO_ALLOWED_HOST")]
+    ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOST").split(",")
 
 
 # Application definition
@@ -79,7 +79,7 @@ CORS_URLS_REGEX = r"^/api/.*$"
 if (DEBUG):
     CORS_ORIGIN_ALLOW_ALL = True
 else:
-    CORS_ALLOWED_ORIGINS = [env("DJANGO_CORS_ALLOWED_ORIGIN")]
+    CORS_ALLOWED_ORIGINS = env("DJANGO_CORS_ALLOWED_ORIGIN").split(",")
 
 TEMPLATES = [
     {
