@@ -56,10 +56,11 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "rest_framework_simplejwt",
+    "drf_spectacular",
+    'storages',
+    "authentication",
     "domain.product_catalogue",
     "domain.pos",
-    "drf_spectacular",
-    'storages'
 ]
 
 MIDDLEWARE = [
