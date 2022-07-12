@@ -1,16 +1,18 @@
-from multiprocessing.connection import wait
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from .models import Order, Table, Payment, PaymentMethod
 from domain.product_catalogue.models import MenuItem
 from domain.product_catalogue.serializers import MenuItemSerializer
 
+
+User = get_user_model()
 
 # User serializer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "first_name", "last_name")
+
 
 # Table serializer
 class TableSerializer(serializers.ModelSerializer):
