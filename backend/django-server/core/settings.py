@@ -45,6 +45,7 @@ else:
 # Application definition
 
 INSTALLED_APPS = [
+    "account",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -201,3 +202,5 @@ GROUPS = {
     Groups.WAITER.value: [],
      Groups.MANAGER.value: []
 }
+
+AUTH_USER_MODEL = 'account.Account'
