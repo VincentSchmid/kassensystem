@@ -1,5 +1,4 @@
 from rest_framework import viewsets, mixins, generics
-from django.db.models import Sum
 from .serializers import (
     OrderReadSerializer,
     OrderWriteSerializer,
@@ -8,7 +7,7 @@ from .serializers import (
     PaymentReadSerializer,
     PaymentWriteSerializer,
 )
-from .models import Order, Table, Payment, PaymentMethod
+from domain.pos.models import Order, Table, Payment, PaymentMethod
 
 
 class TableViewSet(viewsets.ModelViewSet):
