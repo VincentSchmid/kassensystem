@@ -1,4 +1,3 @@
-from pathlib import Path
 from django.db import models
 from django.contrib.postgres.fields import CICharField, CIEmailField
 from django.contrib.auth.validators import ASCIIUsernameValidator
