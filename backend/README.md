@@ -44,7 +44,7 @@ finally, create the `.env` file in the `django-server` folder with following par
 ```bash
 DJANGO_DEBUG=True
 DATABASE_URL=postgres://<db-username>:<db-password>@<db-endpoint>:5432/<db-name>
-# probably like this: postgres://postgres:postgres@db:5432/postgres
+# probably like this: postgres://postgres:postgres@localhost:5432/postgres
 ```
 
 This file holds configurations that change depending on the environement the server is running in (db connection strings, secrets...).

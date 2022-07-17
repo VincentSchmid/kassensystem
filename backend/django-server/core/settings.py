@@ -46,20 +46,24 @@ else:
 
 INSTALLED_APPS = [
     "account",
+
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
     "corsheaders",
     "rest_framework",
     "rest_framework_simplejwt",
     "drf_spectacular",
     "storages",
+
     "authentication",
     "domain.product_catalogue",
     "domain.pos",
+    "domain.employee",
 ]
 
 MIDDLEWARE = [
