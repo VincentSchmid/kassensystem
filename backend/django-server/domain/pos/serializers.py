@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from domain.employee.models import Waiter
-from domain.pos.models import Order, Table, Payment, PaymentMethod
+from domain.pos.models import Order, Table, Payment, PaymentMethod, OrderItem
 from domain.product_catalogue.models import MenuItem
 from domain.product_catalogue.serializers import MenuItemSerializer
 
@@ -44,21 +44,37 @@ class PaymentWriteSerializer(serializers.ModelSerializer):
         fields = ("id", "amount", "payment_method")
 
 
+class OrderItemReadSerializer(serializers.ModelSerializer):
+    menu_item = MenuItemSerializer(read_only=True)
+
+    class Meta:
+        model = OrderItem
+        fields = ("id", "menu_item", "quantity")
+
+
+class OrderItemWriteSerializer(serializers.ModelSerializer):
+    menu_item = serializers.PrimaryKeyRelatedField(
+        queryset=MenuItem.objects.all(), write_only=True
+    )
+
+    class Meta:
+        model = OrderItem
+        fields = ("menu_item", "quantity")
+
+
 # Oder serializer
 class OrderReadSerializer(serializers.ModelSerializer):
-    menu_items = MenuItemSerializer(many=True, read_only=True)
+    order_items = OrderItemReadSerializer(many=True, read_only=True)
     table = TableSerializer(read_only=True)
     waiter = WaiterSerializer(read_only=True)
 
     class Meta:
         model = Order
-        fields = ("id", "menu_items", "table", "waiter", "status", "total")
+        fields = ("id", "order_items", "table", "waiter", "status", "total")
 
 
 class OrderWriteSerializer(serializers.ModelSerializer):
-    menu_items = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=MenuItem.objects.all(), write_only=True
-    )
+    order_items = OrderItemWriteSerializer(many=True, write_only=True)
     table = serializers.PrimaryKeyRelatedField(
         queryset=Table.objects.all(), write_only=True
     )
@@ -68,4 +84,11 @@ class OrderWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ("id", "menu_items", "table", "waiter", "status")
+        fields = ("id", "order_items", "table", "waiter", "status")
+
+    def create(self, validated_data):
+        order_items = validated_data.pop("order_items")
+        order = Order.objects.create(**validated_data)
+        for order_item in order_items:
+            OrderItem.objects.create(order=order, **order_item)
+        return order
