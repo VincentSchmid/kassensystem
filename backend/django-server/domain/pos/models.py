@@ -39,17 +39,10 @@ class Order(models.Model):
     objects = OrderManager()
 
 
-# class OrderItemManager(models.Manager):
-#     def create(self, order:Order, menu_item:MenuItem, quantity:int):
-#         self.get_queryset().create(order=order, menu_item=menu_item, quantity=quantity)
-
-
 class OrderItem(models.Model):
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-
-#    objects = OrderItemManager()
 
     def __str__(self):
         return self.menu_item.name
