@@ -1,4 +1,3 @@
-from requests import Response
 from rest_framework import viewsets, mixins, generics
 from .serializers import (
     OrderReadSerializer,
@@ -10,6 +9,8 @@ from .serializers import (
     PaymentReadSerializer,
     PaymentWriteSerializer,
 )
+
+from domain.pos.queries import get_orders_with_order_items
 from domain.pos.models import Order, Table, Payment, PaymentMethod, OrderItem
 
 
@@ -42,7 +43,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            return Order.objects.prefetch_related("order_items")
+            return get_orders_with_order_items()
         return Order.objects.all()
 
 
@@ -65,10 +66,8 @@ class PaymentView(
 
     def perform_create(self, serializer):
         order_id = self.kwargs[self.order_param]
-        order = Order.objects.get(id=order_id)
-        serializer.save(order=order)
+        Payment.objects.create_payment(order_id, **serializer.validated_data)
 
     def get_object(self):
         order_id = self.kwargs[self.order_param]
-        order = Order.objects.get(id=order_id)
-        return self.queryset.filter(order=order).first()
+        return Payment.objects.get_payment(order_id=order_id)

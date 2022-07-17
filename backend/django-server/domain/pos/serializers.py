@@ -1,8 +1,10 @@
 from rest_framework import serializers
+
 from domain.employee.models import Waiter
-from domain.pos.models import Order, Table, Payment, PaymentMethod, OrderItem
 from domain.product_catalogue.models import MenuItem
 from domain.product_catalogue.serializers import MenuItemSerializer
+from domain.pos.models import Order, Table, Payment, PaymentMethod, OrderItem
+from domain.pos.queries import get_order_total
 
 
 class WaiterSerializer(serializers.ModelSerializer):
@@ -59,7 +61,7 @@ class OrderItemWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrderItem
-        fields = ("menu_item", "quantity")
+        fields = ("id", "menu_item", "quantity")
 
 
 # Oder serializer
@@ -69,8 +71,8 @@ class OrderReadSerializer(serializers.ModelSerializer):
     waiter = WaiterSerializer(read_only=True)
     total = serializers.SerializerMethodField("get_total")
 
-    def get_total(self, obj):
-        return sum([item.menu_item.price * item.quantity for item in obj.order_items.all()])
+    def get_total(self, order):
+        return get_order_total(order)
 
     class Meta:
         model = Order
@@ -88,7 +90,7 @@ class OrderWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ("id", "order_items", "table", "waiter", "status")
+        fields = ("id", "order_items", "table", "waiter")
 
     def create(self, validated_data):
         order_items = validated_data.pop("order_items")
