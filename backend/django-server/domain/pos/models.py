@@ -14,7 +14,7 @@ class PaymentMethod(models.Model):
 class Order(models.Model):
     table = models.ForeignKey(Table, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=50, null=True)
-    waiter = models.ForeignKey(Waiter, on_delete=models.SET_NULL, null=True)
+    waiter = models.ForeignKey(Waiter, on_delete=models.CASCADE)
 
     @property
     def total(self):
