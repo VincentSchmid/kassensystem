@@ -1,16 +1,11 @@
 from rest_framework import serializers
 
 from domain.employee.models import Waiter
+from domain.employee.serializers import WaiterSerializer
 from domain.product_catalogue.models import MenuItem
 from domain.product_catalogue.serializers import MenuItemSerializer
 from domain.pos.models import Order, Table, Payment, PaymentMethod, OrderItem
 from domain.pos.queries import get_order_total
-
-
-class WaiterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Waiter
-        fields = ("id", "name")
 
 
 # Table serializer
