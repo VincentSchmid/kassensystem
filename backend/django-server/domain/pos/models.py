@@ -16,10 +16,6 @@ class Order(models.Model):
     status = models.CharField(max_length=50, null=True)
     waiter = models.ForeignKey(Waiter, on_delete=models.CASCADE)
 
-    @property
-    def total(self):
-        return sum([item.price for item in self.menu_items.all()])
-
 
 class OrderItem(models.Model):
     menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)

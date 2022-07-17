@@ -67,6 +67,10 @@ class OrderReadSerializer(serializers.ModelSerializer):
     order_items = OrderItemReadSerializer(many=True, read_only=True)
     table = TableSerializer(read_only=True)
     waiter = WaiterSerializer(read_only=True)
+    total = serializers.SerializerMethodField("get_total")
+
+    def get_total(self, obj):
+        return sum([item.menu_item.price * item.quantity for item in obj.order_items.all()])
 
     class Meta:
         model = Order

@@ -57,6 +57,12 @@ class PaymentView(
             return PaymentWriteSerializer
         return PaymentReadSerializer
 
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
     def perform_create(self, serializer):
         order_id = self.kwargs[self.order_param]
         order = Order.objects.get(id=order_id)
