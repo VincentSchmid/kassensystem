@@ -1,7 +1,7 @@
 from typing import List
 from uuid import UUID, uuid4
-from django.http import HttpResponse
 
+from django.http import HttpResponse
 from ninja import Router
 
 from .dtos import TableWriteDto, TableReadDto
