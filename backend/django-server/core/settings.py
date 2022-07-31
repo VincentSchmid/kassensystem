@@ -12,10 +12,7 @@ import sys
 import dj_database_url
 
 
-env = environ.Env(
-    DJANGO_ENVIRONMENT=(str, "dev"),
-    DJANGO_DEBUG=(bool, True)
-)
+env = environ.Env(DJANGO_ENVIRONMENT=(str, "dev"), DJANGO_DEBUG=(bool, True))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,20 +34,17 @@ else:
 
 INSTALLED_APPS = [
     "account",
-
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     "corsheaders",
-    "rest_framework",
-    "rest_framework_simplejwt",
+    "ninja_extra",
+    'ninja_jwt',
     "drf_spectacular",
     "storages",
-
     "authentication",
     "domain.product_catalogue",
     "domain.pos",
@@ -78,7 +72,7 @@ else:
     ALLOWED_HOSTS = env("DJANGO_ALLOWED_HOST").split(",")
     CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS").split(",")
     CORS_ALLOWED_ORIGINS = env("DJANGO_CORS_ALLOWED_ORIGIN").split(",")
-    SECURE_HSTS_SECONDS = 172800 # 2 days
+    SECURE_HSTS_SECONDS = 172800  # 2 days
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     CSRF_COOKIE_SECURE = True
@@ -109,8 +103,8 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
-if "test" in  sys.argv:
-    DATABASES['default'] = {'ENGINE': 'django.db.backends.sqlite3'}
+if "test" in sys.argv:
+    DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3"}
 
 
 # Password validation
@@ -172,16 +166,10 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
-    "DEFAULT_PERMISSION_CLASSES": ["authentication.permissions.RestrictiveDjangoModelPermissions"],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "authentication.permissions.RestrictiveDjangoModelPermissions"
+    ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-}
-
-SPECTACULAR_SETTINGS = {
-    "TITLE": "Point of Sale API",
-    "DESCRIPTION": "point of sale system",
-    "VERSION": "1.0.0",
-    "SCHEMA_PATH_PREFIX": "/api/v[0-9]/[a-zA-Z0-9-_]*/",
-    "SERVE_INCLUDE_SCHEMA": False,
 }
 
 SIMPLE_JWT = {
@@ -192,13 +180,12 @@ SIMPLE_JWT = {
 
 # Groups
 
+
 class Groups(Enum):
     WAITER: str = "Waiter"
     MANAGER: str = "Manager"
 
-GROUPS = {
-    Groups.WAITER.value: [],
-     Groups.MANAGER.value: []
-}
 
-AUTH_USER_MODEL = 'account.Account'
+GROUPS = {Groups.WAITER.value: [], Groups.MANAGER.value: []}
+
+AUTH_USER_MODEL = "account.Account"

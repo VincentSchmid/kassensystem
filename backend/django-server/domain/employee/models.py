@@ -1,15 +1,11 @@
 from uuid import uuid4
 
 from django.db import models
-from django.contrib.auth import get_user_model
-
-
-User = get_user_model()
 
 
 class Waiter(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    user_id = models.UUIDField(null=True)
     name = models.CharField(max_length=100, null=True)
 
     def __str__(self):
@@ -25,7 +21,7 @@ class Waiter(models.Model):
 
 class Manager(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
+    user_id = models.UUIDField(null=True)
     name = models.CharField(max_length=100, null=True)
 
     def __str__(self):

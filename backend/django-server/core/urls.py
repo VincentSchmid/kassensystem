@@ -14,10 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from .api import api
 
@@ -25,18 +24,6 @@ from .api import api
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", api.urls),
-    #path("api/", include("authentication.urls")),
-
-    path("api/v1/employee/", include("domain.employee.urls")),
-    path("api/v1/product-catalogue/", include("domain.product_catalogue.urls")),
-    path("api/v1/pos/", include("domain.pos.urls")),
-
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path(
-        "api/swagger/",
-        SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui",
-    ),
 ]
 
 if settings.DEBUG:

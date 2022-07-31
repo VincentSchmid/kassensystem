@@ -6,7 +6,7 @@ from django.conf import settings
 
 
 class Command(BaseCommand):
-    help = 'Creates read only default permission groups for users'
+    help = "Creates read only default permission groups for users"
 
     def handle(self, *args, **options):
         for group, permissions in settings.GROUPS.items():

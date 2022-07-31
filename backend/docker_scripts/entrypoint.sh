@@ -38,7 +38,10 @@ python manage.py initgroups
 
 if [ "$DJANGO_SUPERUSER_USERNAME" ]
 then
-    python manage.py initadmin
+    python manage.py initadmin  \
+    --username "$DJANGO_SUPERUSER_USERNAME" \
+    --email "$DJANGO_SUPERUSER_EMAIL" \
+    --password "$DJANGO_SUPERUSER_PASSWORD"
 fi
 
 exec "$@"
