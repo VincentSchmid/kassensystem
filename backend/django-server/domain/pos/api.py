@@ -108,7 +108,7 @@ class OrderController:
     def handle_get_order_detail(self, request, order_id: UUID):
         return get_order(order_id)
 
-    @http_get("/{oder_id}/payment", response=PaymentReadDto)
+    @http_get("/{order_id}/payment", response=PaymentReadDto)
     def handle_get_order_payment(self, request, order_id: UUID):
         return get_payment(order_id)
 
