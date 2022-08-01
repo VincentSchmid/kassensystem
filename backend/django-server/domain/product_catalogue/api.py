@@ -39,16 +39,19 @@ from .queries import (
     "/sales_taxes", tags=["Sales Taxes"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class SalesTaxController:
+    app_label = "product_catalogue"
+    model_name = "salestax"
+
     @http_get("/", response=List[SalesTaxReadDto])
-    def handle_get_sales_taxes(request):
+    def handle_get_sales_taxes(self, request):
         return get_sales_taxes()
 
     @http_get("/{sales_tax_id}", response=SalesTaxReadDto)
-    def handle_get_sales_tax_detail(request, sales_tax_id: UUID):
+    def handle_get_sales_tax_detail(self, request, sales_tax_id: UUID):
         return get_sales_tax(sales_tax_id)
 
     @http_post("/")
-    def handle_create_sales_tax(request, payload: SalesTaxWriteDto):
+    def handle_create_sales_tax(self, request, payload: SalesTaxWriteDto):
         id = uuid4()
         create_sales_tax_command.send(
             sender=None, id=id, name=payload.name, rate=payload.rate
@@ -56,7 +59,7 @@ class SalesTaxController:
         return {"id": id}
 
     @http_delete("/{sales_tax_id}")
-    def handle_delete_sales_tax(request, sales_tax_id: UUID):
+    def handle_delete_sales_tax(self, request, sales_tax_id: UUID):
         delete_sales_tax_command.send(sender=None, id=sales_tax_id)
         return HttpResponse(status=204)
 
@@ -65,22 +68,25 @@ class SalesTaxController:
     "/categories", tags=["Categories"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class CategoryController:
+    app_label = "product_catalogue"
+    model_name = "category"
+
     @http_get("/", response=List[CategoryReadDto])
-    def handle_get_categories(request):
+    def handle_get_categories(self, request):
         return get_categories()
 
     @http_get("/{category_id}", response=CategoryReadDto)
-    def handle_get_category_detail(request, category_id: UUID):
+    def handle_get_category_detail(self, request, category_id: UUID):
         return get_category(category_id)
 
     @http_post("/")
-    def handle_create_category(request, payload: CategoryWriteDto):
+    def handle_create_category(self, request, payload: CategoryWriteDto):
         id = uuid4()
         create_category_command.send(sender=None, id=id, name=payload.name)
         return {"id": id}
 
     @http_delete("/{category_id}")
-    def handle_delete_category(request, category_id: UUID):
+    def handle_delete_category(self, request, category_id: UUID):
         delete_category_command.send(sender=None, id=category_id)
         return HttpResponse(status=204)
 
@@ -89,16 +95,19 @@ class CategoryController:
     "/menu_items", tags=["Menu Items"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class MenuItemController:
+    app_label = "product_catalogue"
+    model_name = "menuitem"
+
     @http_get("/", response=List[MenuItemReadDto])
-    def handle_get_menu_items(request):
+    def handle_get_menu_items(self, request):
         return get_menu_items()
 
     @http_get("/{menu_item_id}", response=MenuItemReadDto)
-    def handle_get_menu_item_detail(request, menu_item_id: UUID):
+    def handle_get_menu_item_detail(self, request, menu_item_id: UUID):
         return get_menu_item(menu_item_id)
 
     @http_post("/")
-    def handle_create_menu_item(request, payload: MenuItemWriteDto):
+    def handle_create_menu_item(self, request, payload: MenuItemWriteDto):
         id = uuid4()
         create_menu_item_command.send(
             sender=None,
@@ -110,6 +119,6 @@ class MenuItemController:
         return {"id": id}
 
     @http_delete("/{menu_item_id}")
-    def handle_delete_menu_item(request, menu_item_id: UUID):
+    def handle_delete_menu_item(self, request, menu_item_id: UUID):
         delete_menu_item_command.send(sender=None, id=menu_item_id)
         return HttpResponse(status=204)

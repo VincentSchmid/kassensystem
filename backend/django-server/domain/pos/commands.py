@@ -1,6 +1,11 @@
 from uuid import UUID
+from typing import List
+
 from django.dispatch import Signal, receiver
-from .models import Table, PaymentMethod, Payment, Order, OrderState
+from .models import Table, PaymentMethod, Payment, Order, OrderItem
+from domain.product_catalogue.models import MenuItem
+from domain.employee.models import Waiter
+from .dtos import OrderItemWriteDto
 
 
 create_table_command = Signal()
@@ -39,8 +44,9 @@ def handle_delete_payment_method(sender, signal, **kwargs):
 
 
 @receiver(create_payment_command)
-def handle_create_payment(sender, signal, **kwargs):
-    payment = Payment.objects.create_payment(**kwargs)
+def handle_create_payment(sender, signal, payment_id: UUID, payment_method_id: UUID, **kwargs):
+    payment_method = PaymentMethod.objects.get(id=payment_method_id)
+    payment = Payment.objects.create_payment(id=payment_id, payment_method=payment_method, **kwargs)
     Order.objects.add_payment(payment)
 
 
@@ -51,8 +57,17 @@ def handle_delete_payment(sender, signal, **kwargs):
 
 
 @receiver(create_order_command)
-def handle_create_order(sender, signal, **kwargs):
-    Order.objects.create(**kwargs)
+def handle_create_order(sender, signal, order_id: UUID, waiter_id: UUID, table_id: UUID, order_items: List[OrderItemWriteDto], **kwargs):
+    waiter = Waiter.objects.get(id=waiter_id)
+    table = Table.objects.get(id=table_id)
+    order = Order.objects.create(waiter=waiter, table=table, id=order_id)
+    for order_item in order_items:
+        create_order_item(order, order_item)
+
+
+def create_order_item(order: Order, order_item: OrderItemWriteDto):
+    menu_item = MenuItem.objects.get(id=order_item.menu_item_id)
+    OrderItem.objects.create(order=order, menu_item=menu_item, quantity=order_item.quantity)
 
 
 @receiver(delete_order_command)

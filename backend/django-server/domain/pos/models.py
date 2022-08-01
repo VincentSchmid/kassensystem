@@ -23,12 +23,12 @@ class PaymentMethod(models.Model):
 
 
 class OrderManager(models.Manager):
-    def create(self, waiter: Waiter, table: Table):
+    def create(self, id: UUID, waiter: Waiter, table: Table):
         return self.get_queryset().create(
-            waiter=waiter, table=table, status=OrderState.UNPAID.name
+            id=id, waiter=waiter, table=table, status=OrderState.UNPAID.name
         )
 
-    def add_payment(payment):
+    def add_payment(self, payment):
         payment.order.status = OrderState.PAID.name
         payment.order.save()
 
@@ -56,11 +56,11 @@ class OrderItem(models.Model):
 
 class PaymentManager(models.Manager):
     def create_payment(
-        self, order_id: UUID, amount: float, payment_method: PaymentMethod
+        self, id: UUID, order_id: UUID, amount: float, payment_method: PaymentMethod
     ):
         order = Order.objects.get(id=order_id)
         payment = self.get_queryset().create(
-            order=order, amount=amount, payment_method=payment_method
+            id=id, order=order, amount=amount, payment_method=payment_method
         )
         return payment
 

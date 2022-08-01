@@ -2,7 +2,7 @@ from math import perm
 from typing import List
 from uuid import UUID, uuid4
 
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseNotFound
 from ninja_extra import api_controller, http_get, http_post, http_delete
 from ninja_jwt.authentication import JWTAuth
 from authentication.permissions import ModelPermission
@@ -24,6 +24,7 @@ from .commands import (
     delete_payment_method_command,
     create_order_command,
     delete_order_command,
+    create_payment_command,
 )
 from .queries import (
     get_table,
@@ -71,7 +72,7 @@ class TableController:
 )
 class PaymentMethodController:
     app_label = "pos"
-    model_name = "payment_method"
+    model_name = "paymentmethod"
 
     @http_get("/", response=List[PaymentMethodReadDto])
     def handle_get_payment_methods(self, request):
@@ -110,17 +111,17 @@ class OrderController:
 
     @http_get("/{order_id}/payment", response=PaymentReadDto)
     def handle_get_order_payment(self, request, order_id: UUID):
-        return get_payment(order_id)
+        return get_payment(order_id) or HttpResponse(status=404, reason="No Payment found")
 
     @http_post("/{order_id}/payment")
     def handle_create_payment(self, request, order_id: UUID, payload: PaymentWriteDto):
         id = uuid4()
-        create_order_command.send(
+        create_payment_command.send(
             sender=None,
             order_id=order_id,
-            id=id,
+            payment_id=id,
             amount=payload.amount,
-            payment_method_id=payload.payment_method.id,
+            payment_method_id=payload.payment_method_id,
         )
         return {"id": id}
 
@@ -129,12 +130,10 @@ class OrderController:
         id = uuid4()
         create_order_command.send(
             sender=None,
-            id=id,
+            order_id=id,
             order_items=payload.order_items,
-            table=payload.table,
-            status=payload.status,
-            waiter=payload.waiter,
-            payment=payload.payment,
+            table_id=payload.table_id,
+            waiter_id=payload.waiter_id
         )
         return {"id": id}
 

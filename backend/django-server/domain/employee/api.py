@@ -28,28 +28,29 @@ from .queries import (
     "/waiters", tags=["Waiters"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class WaiterController:
+    app_label = "employee"
+    model_name = "waiter"
+
     @http_get("/", response=List[WaiterReadDto])
-    def handle_get_waiters(request):
+    def handle_get_waiters(self, request):
         return get_waiters()
 
     @http_get("/{waiter_id}", response=WaiterReadDto)
-    def handle_get_waiter_detail(request, waiter_id: UUID):
+    def handle_get_waiter_detail(self, request, waiter_id: UUID):
         return get_waiter(waiter_id)
 
-    @http_delete("/{waiter_id}")
-    def handle_delete_waiter(request, waiter_id: UUID):
-        delete_waiter_command.send(sender=None, id=waiter_id)
-        return HttpResponse(status=204)
+
+@api_controller(
+    "/managers", tags=["Waiters"], auth=JWTAuth(), permissions=[ModelPermission]
+)
+class ManagerController:
+    app_label = "employee"
+    model_name = "manager"
 
     @http_get("/", response=List[ManagerReadDto])
-    def handle_get_managers(request):
+    def handle_get_managers(self, request):
         return get_managers()
 
     @http_get("/{manager_id}", response=ManagerReadDto)
-    def handle_get_manager_detail(request, manager_id: UUID):
+    def handle_get_manager_detail(self, request, manager_id: UUID):
         return get_manager(manager_id)
-
-    @http_delete("/{manager_id}")
-    def handle_delete_manager(request, manager_id: UUID):
-        delete_manager_command.send(sender=None, id=manager_id)
-        return HttpResponse(status=204)

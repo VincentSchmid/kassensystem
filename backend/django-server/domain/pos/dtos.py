@@ -51,11 +51,10 @@ class OrderReadDto(Schema):
     table: TableReadDto
     status: str
     waiter: WaiterReadDto
-    payment: PaymentReadDto
+    total: float
 
 
 class OrderWriteDto(Schema):
     order_items: List[OrderItemWriteDto]
     table_id: UUID
-    status: str
     waiter_id: UUID
