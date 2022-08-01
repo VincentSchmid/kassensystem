@@ -1,5 +1,6 @@
+from uuid import UUID
 from django.dispatch import Signal, receiver
-from .models import Table, PaymentMethod, Payment, Order
+from .models import Table, PaymentMethod, Payment, Order, OrderState
 
 
 create_table_command = Signal()
@@ -39,7 +40,8 @@ def handle_delete_payment_method(sender, signal, **kwargs):
 
 @receiver(create_payment_command)
 def handle_create_payment(sender, signal, **kwargs):
-    Payment.objects.create_payment(**kwargs)
+    payment = Payment.objects.create_payment(**kwargs)
+    Order.objects.add_payment(payment)
 
 
 @receiver(delete_payment_command)

@@ -8,32 +8,47 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Manager',
+            name="Manager",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('user_id', models.UUIDField(null=True)),
-                ('name', models.CharField(max_length=100, null=True)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("user_id", models.UUIDField(null=True)),
+                ("name", models.CharField(max_length=100, null=True)),
             ],
             options={
-                'verbose_name': 'Manager',
-                'verbose_name_plural': 'Managers',
+                "verbose_name": "Manager",
+                "verbose_name_plural": "Managers",
             },
         ),
         migrations.CreateModel(
-            name='Waiter',
+            name="Waiter",
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
-                ('user_id', models.UUIDField(null=True)),
-                ('name', models.CharField(max_length=100, null=True)),
+                (
+                    "id",
+                    models.UUIDField(
+                        default=uuid.uuid4,
+                        editable=False,
+                        primary_key=True,
+                        serialize=False,
+                    ),
+                ),
+                ("user_id", models.UUIDField(null=True)),
+                ("name", models.CharField(max_length=100, null=True)),
             ],
             options={
-                'verbose_name': 'Waiter',
-                'verbose_name_plural': 'Waiters',
+                "verbose_name": "Waiter",
+                "verbose_name_plural": "Waiters",
             },
         ),
     ]

@@ -1,12 +1,10 @@
 from enum import Enum
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from django.db import models
-from django.dispatch import receiver
 
 from domain.product_catalogue.models import MenuItem
 from domain.employee.models import Waiter
-from domain.pos.signals import payment_created
 
 
 class OrderState(Enum):
@@ -30,8 +28,7 @@ class OrderManager(models.Manager):
             waiter=waiter, table=table, status=OrderState.UNPAID.name
         )
 
-    @receiver(payment_created)
-    def set_order_status(sender, payment, **kwargs):
+    def add_payment(payment):
         payment.order.status = OrderState.PAID.name
         payment.order.save()
 
@@ -59,16 +56,15 @@ class OrderItem(models.Model):
 
 class PaymentManager(models.Manager):
     def create_payment(
-        self, order_id: int, amount: float, payment_method: PaymentMethod
+        self, order_id: UUID, amount: float, payment_method: PaymentMethod
     ):
         order = Order.objects.get(id=order_id)
         payment = self.get_queryset().create(
             order=order, amount=amount, payment_method=payment_method
         )
-        payment_created.send(sender=Payment, payment=payment)
         return payment
 
-    def get_payment(self, order_id: int):
+    def get_payment(self, order_id: UUID):
         return super().get_queryset().filter(order__id=order_id).first()
 
 
