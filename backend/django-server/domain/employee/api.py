@@ -4,6 +4,7 @@ from uuid import UUID
 from django.http import HttpResponse
 from ninja_extra import api_controller, http_get, http_delete
 from ninja_jwt.authentication import JWTAuth
+from authentication.permissions import ModelPermission
 
 from .dtos import (
     WaiterReadDto,
@@ -23,7 +24,9 @@ from .queries import (
 )
 
 
-@api_controller("/waiters", tags=["Waiters"], auth=JWTAuth())
+@api_controller(
+    "/waiters", tags=["Waiters"], auth=JWTAuth(), permissions=[ModelPermission]
+)
 class WaiterController:
     @http_get("/", response=List[WaiterReadDto])
     def handle_get_waiters(request):

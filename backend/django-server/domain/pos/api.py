@@ -36,7 +36,9 @@ from .queries import (
 )
 
 
-@api_controller("/pos/tables", tags=["Tables"], auth=JWTAuth(), permissions=[ModelPermission])
+@api_controller(
+    "/pos/tables", tags=["Tables"], auth=JWTAuth(), permissions=[ModelPermission]
+)
 class TableController:
     app_label = "pos"
     model_name = "table"
@@ -61,7 +63,12 @@ class TableController:
         return HttpResponse(status=204)
 
 
-@api_controller("/pos/payment_methods", tags=["Payment Methods"], auth=JWTAuth(), permissions=[ModelPermission])
+@api_controller(
+    "/pos/payment_methods",
+    tags=["Payment Methods"],
+    auth=JWTAuth(),
+    permissions=[ModelPermission],
+)
 class PaymentMethodController:
     app_label = "pos"
     model_name = "payment_method"
@@ -86,7 +93,9 @@ class PaymentMethodController:
         return HttpResponse(status=204)
 
 
-@api_controller("/pos/orders", tags=["Orders"], auth=JWTAuth(), permissions=[ModelPermission])
+@api_controller(
+    "/pos/orders", tags=["Orders"], auth=JWTAuth(), permissions=[ModelPermission]
+)
 class OrderController:
     app_label = "pos"
     model_name = "order"

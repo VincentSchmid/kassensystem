@@ -5,6 +5,8 @@ from ninja_extra import api_controller, http_get, http_post, http_delete
 from ninja_jwt.authentication import JWTAuth
 from django.http import HttpResponse
 
+from authentication.permissions import ModelPermission
+
 from .dtos import (
     SalesTaxReadDto,
     SalesTaxWriteDto,
@@ -33,7 +35,9 @@ from .queries import (
 )
 
 
-@api_controller("/sales_taxes", tags=["Sales Taxes"], auth=JWTAuth())
+@api_controller(
+    "/sales_taxes", tags=["Sales Taxes"], auth=JWTAuth(), permissions=[ModelPermission]
+)
 class SalesTaxController:
     @http_get("/", response=List[SalesTaxReadDto])
     def handle_get_sales_taxes(request):
@@ -57,7 +61,9 @@ class SalesTaxController:
         return HttpResponse(status=204)
 
 
-@api_controller("/categories", tags=["Categories"], auth=JWTAuth())
+@api_controller(
+    "/categories", tags=["Categories"], auth=JWTAuth(), permissions=[ModelPermission]
+)
 class CategoryController:
     @http_get("/", response=List[CategoryReadDto])
     def handle_get_categories(request):
@@ -79,7 +85,9 @@ class CategoryController:
         return HttpResponse(status=204)
 
 
-@api_controller("/menu_items", tags=["Menu Items"], auth=JWTAuth())
+@api_controller(
+    "/menu_items", tags=["Menu Items"], auth=JWTAuth(), permissions=[ModelPermission]
+)
 class MenuItemController:
     @http_get("/", response=List[MenuItemReadDto])
     def handle_get_menu_items(request):
