@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.db import models
 from django.contrib.postgres.fields import CICharField, CIEmailField
 from django.contrib.auth.validators import ASCIIUsernameValidator
@@ -36,6 +38,7 @@ class UserManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
     username_validator = ASCIIUsernameValidator()
 
     username = CICharField(
@@ -59,7 +62,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
             "unique": "A user with that email already exists.",
         },
     )
-    
+
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -76,12 +79,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
         self.email = self.__class__.objects.normalize_email(self.email)
 
     objects = UserManager()
-
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
-
-    def has_module_perms(self, app_label):
-        return True
 
     def __str__(self):
         return self.username

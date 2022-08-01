@@ -1,5 +1,8 @@
 django
 gunicorn
+django-ninja
+django-ninja-extra
+django-ninja-jwt
 djangorestframework
 djangorestframework-simplejwt
 markdown
