@@ -111,7 +111,9 @@ class OrderController:
 
     @http_get("/{order_id}/payment", response=PaymentReadDto)
     def handle_get_order_payment(self, request, order_id: UUID):
-        return get_payment(order_id) or HttpResponse(status=404, reason="No Payment found")
+        return get_payment(order_id) or HttpResponse(
+            status=404, reason="No Payment found"
+        )
 
     @http_post("/{order_id}/payment")
     def handle_create_payment(self, request, order_id: UUID, payload: PaymentWriteDto):
@@ -133,7 +135,7 @@ class OrderController:
             order_id=id,
             order_items=payload.order_items,
             table_id=payload.table_id,
-            waiter_id=payload.waiter_id
+            waiter_id=payload.waiter_id,
         )
         return {"id": id}
 
