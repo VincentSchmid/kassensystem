@@ -18,7 +18,7 @@ def get_payment_method(id: UUID) -> PaymentMethod:
     return PaymentMethod.objects.get(id=id)
 
 
-def get_payment_methods() -> List[PaymentMethod]:
+def get_payment_methods() -> QuerySet[PaymentMethod]:
     return PaymentMethod.objects.all()
 
 
@@ -28,17 +28,17 @@ def get_payment(order_id: UUID) -> PaymentMethod:
 
 def get_order(id: UUID) -> Order:
     order = get_orders_with_order_items().get(id=id)
-    order = order_add_total(order)
+    order = get_order_add_total(order)
     return order
 
 
-def order_add_total(order: Order) -> Order:
+def get_order_add_total(order: Order) -> Order:
     order.total = get_order_total(order)
     return order
 
 
 def get_orders() -> List[Order]:
-    return [order_add_total(order) for order in get_orders_with_order_items().all()]
+    return [get_order_add_total(order) for order in get_orders_with_order_items().all()]
 
 
 def get_order_total(order: Order) -> float:

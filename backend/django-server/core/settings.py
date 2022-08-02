@@ -5,7 +5,6 @@ Django 4.0.5.
 
 from pathlib import Path
 import environ
-from datetime import timedelta
 from enum import Enum
 import sys
 
@@ -99,7 +98,7 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {"default": dj_database_url.config(conn_max_age=600)}
 
 if "test" in sys.argv:
-    DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3"}
+    DATABASES["default"] = {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memory:"}
 
 
 # Password validation

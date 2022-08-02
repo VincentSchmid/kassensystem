@@ -9,11 +9,11 @@ def get_waiter(id: UUID) -> Waiter:
 
 
 def get_waiter_by_user_id(user_id: UUID) -> Waiter:
-    return Waiter.objects.get(user__id=user_id)
+    return Waiter.objects.get(user_id=user_id)
 
 
 def waiter_by_user_id_exists(user_id: UUID) -> bool:
-    return Waiter.objects.filter(user__id=user_id).exists()
+    return Waiter.objects.filter(user_id=user_id).exists()
 
 
 def get_waiters() -> List[Waiter]:
@@ -25,11 +25,11 @@ def get_manager(id: UUID) -> Manager:
 
 
 def get_manager_by_user_id(user_id: UUID) -> Manager:
-    return Manager.objects.get(user__id=user_id)
+    return Manager.objects.filter(user_id=user_id).first()
 
 
 def manager_by_user_id_exists(user_id: UUID) -> bool:
-    return Manager.objects.filter(user__id=user_id).exists()
+    return Manager.objects.filter(user_id=user_id).exists()
 
 
 def get_managers() -> List[Manager]:

@@ -38,25 +38,31 @@ def handle_create_payment_method(sender, signal, **kwargs):
 
 
 @receiver(delete_payment_method_command)
-def handle_delete_payment_method(sender, signal, **kwargs):
-    payment_method = PaymentMethod.objects.get(**kwargs)
+def handle_delete_payment_method(sender, signal, payment_method_id: UUID, **kwargs):
+    payment_method = PaymentMethod.objects.get(id=payment_method_id)
     payment_method.delete()
 
 
 @receiver(create_payment_command)
 def handle_create_payment(
-    sender, signal, payment_id: UUID, payment_method_id: UUID, **kwargs
+    sender,
+    signal,
+    payment_id: UUID,
+    payment_method_id: UUID,
+    order_id: UUID,
+    amount: int,
+    **kwargs
 ):
     payment_method = PaymentMethod.objects.get(id=payment_method_id)
     payment = Payment.objects.create_payment(
-        id=payment_id, payment_method=payment_method, **kwargs
+        id=payment_id, payment_method=payment_method, order_id=order_id, amount=amount
     )
     Order.objects.add_payment(payment)
 
 
 @receiver(delete_payment_command)
-def handle_delete_payment(sender, signal, **kwargs):
-    payment = Payment.objects.get(**kwargs)
+def handle_delete_payment(sender, signal, payment_id, **kwargs):
+    payment = Payment.objects.get(id=payment_id)
     payment.delete()
 
 
@@ -85,6 +91,6 @@ def create_order_item(order: Order, order_item: OrderItemWriteDto):
 
 
 @receiver(delete_order_command)
-def handle_delete_order(sender, signal, **kwargs):
-    order = Order.objects.get(**kwargs)
+def handle_delete_order(sender, signal, order_id: UUID, **kwargs):
+    order = Order.objects.get(id=order_id)
     order.delete()
