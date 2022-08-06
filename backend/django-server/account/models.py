@@ -61,6 +61,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
         error_messages={
             "unique": "A user with that email already exists.",
         },
+        null=True,
     )
 
     is_admin = models.BooleanField(default=False)
@@ -71,7 +72,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
 
-    EMAIL_FIELD = "email"
     USERNAME_FIELD = "username"
 
     def clean(self):
