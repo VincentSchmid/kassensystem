@@ -28,14 +28,13 @@ On Mac
 Once the environement is running, install the project dependecies:
 
 ```bash
-pip install -r requirements.txt
+pip install poetry
 ```
-
-if that fails try:
-
+followed by:
 ```bash
-pip install wheel
+poetry install
 ```
+Poetry will install all project dependecies and manages package versions.
 
 ### Django Configuration
 
