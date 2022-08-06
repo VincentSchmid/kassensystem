@@ -7,11 +7,17 @@ from pathlib import Path
 import environ
 from enum import Enum
 import sys
+from datetime import timedelta
 
 import dj_database_url
 
 
-env = environ.Env(DJANGO_ENVIRONMENT=(str, "dev"), DJANGO_DEBUG=(bool, True))
+env = environ.Env(
+    DJANGO_ENVIRONMENT=(str, "dev"),
+    DJANGO_DEBUG=(bool, True),
+    JWT_ACCESS_TOKEN_LIFETIME_MINUTES=(int, 120),
+    JWT_REFRESH_TOKEN_LIFETIME_DAYS=(int, 1),
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -156,8 +162,6 @@ else:
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Groups
-
-
 class Groups(Enum):
     WAITER: str = "Waiter"
     MANAGER: str = "Manager"
@@ -166,3 +170,10 @@ class Groups(Enum):
 GROUPS = {Groups.WAITER.value: [], Groups.MANAGER.value: []}
 
 AUTH_USER_MODEL = "account.Account"
+
+NINJA_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=env("JWT_ACCESS_TOKEN_LIFETIME_MINUTES")
+    ),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=env("JWT_REFRESH_TOKEN_LIFETIME_DAYS")),
+}

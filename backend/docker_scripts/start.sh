@@ -16,7 +16,7 @@ else
     gunicorn \
         --bind 0.0.0.0:8000 \
         --workers 2 \
-        --log-level DEBUG \
+        --log-level ERROR \
         --access-logfile "-" \
         --error-logfile "-" core.wsgi
 fi
