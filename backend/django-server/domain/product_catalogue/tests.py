@@ -81,7 +81,7 @@ class QueryProductCatalogueTestCases(TestCase):
         sales_tax_id = uuid4()
         SalesTax.objects.create(id=sales_tax_id, rate=0.1)
         self.assertIsNotNone(get_sales_taxes())
-        self.assertEquals(1, len(get_sales_taxes()))
+        self.assertEqual(1, len(get_sales_taxes()))
 
     def test_get_category(self):
         category_id = uuid4()
@@ -92,7 +92,7 @@ class QueryProductCatalogueTestCases(TestCase):
         category_id = uuid4()
         Category.objects.create(id=category_id, name="Test Category")
         self.assertIsNotNone(get_categories())
-        self.assertEquals(1, len(get_categories()))
+        self.assertEqual(1, len(get_categories()))
 
     def test_get_menu_item(self):
         category_id = uuid4()
@@ -111,4 +111,4 @@ class QueryProductCatalogueTestCases(TestCase):
             id=menu_item_id, category_id=category_id, name="Menu Item", price=10
         )
         self.assertIsNotNone(get_menu_items())
-        self.assertEquals(1, len(get_menu_items()))
+        self.assertEqual(1, len(get_menu_items()))
