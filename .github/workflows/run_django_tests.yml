@@ -4,11 +4,11 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - backend/**
+      - backend/django-server/**
   pull_request:
     branches: [ "main" ]
     paths:
-      - backend/**
+      - backend/django-server/**
 
 env:
   PYTHON_VERSION: "3.10"
