@@ -10,7 +10,7 @@ Before running the server there are some things that need to be done.
 Navigate to this folder and create a virutal environment (using conda or venv). One possible way of doing that:
 
 ```bash
-pyhon -m venv .venv
+python -m venv .venv
 ```
 
 Now activate the newly created environement:
