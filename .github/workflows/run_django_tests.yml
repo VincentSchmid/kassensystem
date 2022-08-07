@@ -39,9 +39,9 @@ jobs:
       run: |
         cd backend
         poetry install --no-interaction
-        PATH=.venv/bin:$PATH
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
     - name: Run Tests
       run: |
+        source backend/.venv/bin/activate
         cd backend/django-server
         python manage.py test
