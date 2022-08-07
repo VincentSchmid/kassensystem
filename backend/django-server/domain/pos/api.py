@@ -95,8 +95,7 @@ class PaymentMethodController:
 
 
 @api_controller(
-    "/pos/orders", tags=["Orders"], auth=JWTAuth(), permissions=[ModelPermission]
-)
+    "/pos/orders", tags=["Orders"], auth=JWTAuth(), permissions=[ModelPermission])
 class OrderController:
     app_label = "pos"
     model_name = "order"
