@@ -61,6 +61,9 @@ python manage.py createsuperuser
 
 ## Running the server
 
+Make sure the databes specified in the .env file is available.  
+The docker-compose file in the repo root directory, will create the database for you.
+
 ```bash
 python manage.py runserver
 ```
