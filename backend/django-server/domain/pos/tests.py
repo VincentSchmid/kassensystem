@@ -94,12 +94,13 @@ class CommandTestCases(TestCase):
     def test_create_order_command(self):
         order_id = uuid4()
         table_id = uuid4()
+        user_id = uuid4()
         waiter_id = uuid4()
         menu_item_id = uuid4()
 
         MenuItem.objects.create(id=menu_item_id, name="Pizza", price=100)
         Table.objects.create(id=table_id, number=12)
-        Waiter.objects.create(id=waiter_id, name="John")
+        Waiter.objects.create(id=waiter_id, user_id=user_id, name="John")
 
         order_items = [
             OrderItemWriteDto(
@@ -112,7 +113,7 @@ class CommandTestCases(TestCase):
             sender=None,
             order_id=order_id,
             table_id=table_id,
-            waiter_id=waiter_id,
+            user_id=user_id,
             order_items=order_items,
         )
 

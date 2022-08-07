@@ -135,11 +135,11 @@ class OrderController:
             order_id=id,
             order_items=payload.order_items,
             table_id=payload.table_id,
-            waiter_id=payload.waiter_id,
+            user_id=request.user.id,
         )
         return {"id": id}
 
     @http_delete("/{order_id}")
     def handle_delete_order(self, request, order_id: UUID):
-        delete_order_command.send(sender=None, id=order_id)
+        delete_order_command.send(sender=None, order_id=order_id)
         return HttpResponse(status=204)

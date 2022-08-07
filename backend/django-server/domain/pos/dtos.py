@@ -57,4 +57,3 @@ class OrderReadDto(Schema):
 class OrderWriteDto(Schema):
     order_items: List[OrderItemWriteDto]
     table_id: UUID
-    waiter_id: UUID
