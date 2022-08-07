@@ -26,14 +26,6 @@ jobs:
       with:
         python-version: ${{ env.PYTHON_VERSION }}
       #----------------------------------------------
-      #  -----  load cached peotry install  -----
-      #----------------------------------------------
-    - name: Load cached Poetry installation
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pypoetry  # the path depends on the OS
-        key: poetry-0  # increment to reset cache
-      #----------------------------------------------
       #  -----  install & configure poetry  -----
       #----------------------------------------------
     - name: Install Poetry
