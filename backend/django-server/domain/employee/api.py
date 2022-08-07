@@ -1,19 +1,13 @@
 from typing import List
 from uuid import UUID
 
-from django.http import HttpResponse
-from ninja_extra import api_controller, http_get, http_delete
+from ninja_extra import api_controller, http_get
 from ninja_jwt.authentication import JWTAuth
 from authentication.permissions import ModelPermission
 
 from .dtos import (
     WaiterReadDto,
     ManagerReadDto,
-)
-
-from .commands import (
-    delete_waiter_command,
-    delete_manager_command,
 )
 
 from .queries import (
