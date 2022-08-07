@@ -20,6 +20,8 @@ RUN python -m venv .venv && \
     .venv/bin/pip install -r /tmp/requirements.txt --no-deps
 
 FROM python:3.10-slim as runtime
+ENV PYTHONUNBUFFERED 1  
+ENV PYTHONDONTWRITEBYTECODE 1
 WORKDIR /app
 
 RUN apt-get update \ 
