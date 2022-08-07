@@ -1,8 +1,8 @@
+name: Deploy Dev Environment
+
 on:
   release:
     types: [created]
-
-name: Deploy Dev Environment
 
 env:
   CONTAINER_NAME: kassensystem
