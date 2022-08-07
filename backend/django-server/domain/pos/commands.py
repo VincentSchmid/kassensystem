@@ -71,12 +71,12 @@ def handle_create_order(
     sender,
     signal,
     order_id: UUID,
-    waiter_id: UUID,
+    user_id: UUID,
     table_id: UUID,
     order_items: List[OrderItemWriteDto],
     **kwargs
 ):
-    waiter = Waiter.objects.get(id=waiter_id)
+    waiter = Waiter.objects.get(user_id=user_id)
     table = Table.objects.get(id=table_id)
     order = Order.objects.create(waiter=waiter, table=table, id=order_id)
     for order_item in order_items:
