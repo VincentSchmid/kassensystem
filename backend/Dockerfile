@@ -4,20 +4,16 @@ ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 WORKDIR /app
 
-FROM base as poetry
-RUN pip install poetry
-COPY poetry.lock pyproject.toml /app/
-RUN poetry export -o requirements.txt
-
 FROM base as build
-COPY --from=poetry /app/requirements.txt /tmp/requirements.txt
+COPY poetry.lock pyproject.toml /app/
 RUN apt-get update \  
   && apt-get install -y --no-install-recommends build-essential libpq-dev \  
   && rm -rf /var/lib/apt/lists/*
 
 RUN python -m venv .venv && \
-    .venv/bin/pip install 'wheel' && \
-    .venv/bin/pip install -r /tmp/requirements.txt --no-deps
+    .venv/bin/pip install wheel && \
+    .venv/bin/pip install poetry && \
+    .venv/bin/poetry install
 
 FROM python:3.10-slim as runtime
 ENV PYTHONUNBUFFERED 1  
