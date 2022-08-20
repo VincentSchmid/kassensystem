@@ -283,6 +283,21 @@ libcloud = ["apache-libcloud"]
 sftp = ["paramiko"]
 
 [[package]]
+name = "eventsourcing"
+version = "9.2.16"
+description = "Event sourcing in Python"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.extras]
+crypto = ["pycryptodome (<=3.12.99999)"]
+dev = ["psycopg2-binary (<=2.9.99999)", "pycryptodome (<=3.12.99999)", "Sphinx (==4.2.0)", "sphinx-rtd-theme (==1.0.0)", "orjson", "pydantic", "python-coveralls", "coverage", "black", "mypy", "flake8", "flake8-bugbear", "isort", "backports.zoneinfo"]
+docs = ["psycopg2-binary (<=2.9.99999)", "pycryptodome (<=3.12.99999)", "Sphinx (==4.2.0)", "sphinx-rtd-theme (==1.0.0)"]
+postgres = ["psycopg2 (<=2.9.99999)"]
+postgres_dev = ["psycopg2-binary (<=2.9.99999)"]
+
+[[package]]
 name = "gunicorn"
 version = "20.1.0"
 description = "WSGI HTTP Server for UNIX"
@@ -576,7 +591,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "a6a73fa2e55bdd26b69b7840790c0788e7568c362136eeab387688807f9f5df6"
+content-hash = "8425ec23df2bfbf42c8d929d1fc03a40998894283ec1d0a91e3b8c02401989d7"
 
 [metadata.files]
 asgiref = [
@@ -804,6 +819,10 @@ django-ninja-jwt = [
 django-storages = [
     {file = "django-storages-1.13.1.tar.gz", hash = "sha256:b3d98ecc09f1b1627c2b2cf430964322ce4e08617dbf9b4236c16a32875a1e0b"},
     {file = "django_storages-1.13.1-py3-none-any.whl", hash = "sha256:3540b45618b04be2c867c0982e8d2bd8e34f84dae922267fcebe4691fb93daf0"},
+]
+eventsourcing = [
+    {file = "eventsourcing-9.2.16-py3-none-any.whl", hash = "sha256:166c2b80ce5b2160acf542691724fcbc310661baf927443c4b4e2c1fa1187a92"},
+    {file = "eventsourcing-9.2.16.tar.gz", hash = "sha256:48a1f17bcbf1573cba08df8c94b0e145a0803f9f0a74001784c0fe711fe5d9ff"},
 ]
 gunicorn = [
     {file = "gunicorn-20.1.0-py3-none-any.whl", hash = "sha256:9dcc4547dbb1cb284accfb15ab5667a0e5d1881cc443e0677b4882a4067a807e"},

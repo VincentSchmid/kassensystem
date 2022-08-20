@@ -8,17 +8,8 @@ class SalesTaxReadDto(Schema):
     rate: float
 
 
-class SalesTaxWriteDto(Schema):
-    name: str
-    rate: float
-
-
 class CategoryReadDto(Schema):
     id: UUID
-    name: str
-
-
-class CategoryWriteDto(Schema):
     name: str
 
 
@@ -27,9 +18,3 @@ class MenuItemReadDto(Schema):
     name: str
     price: float
     category: CategoryReadDto
-
-
-class MenuItemWriteDto(Schema):
-    name: str
-    price: float
-    category_id: UUID

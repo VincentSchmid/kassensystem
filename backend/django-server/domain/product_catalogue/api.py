@@ -7,16 +7,17 @@ from django.http import HttpResponse
 
 from authentication.permissions import ModelPermission
 
-from .dtos import (
+from .read.dtos import (
     SalesTaxReadDto,
-    SalesTaxWriteDto,
     CategoryReadDto,
-    CategoryWriteDto,
     MenuItemReadDto,
+)
+from .write.dtos import (
+    SalesTaxWriteDto,
+    CategoryWriteDto,
     MenuItemWriteDto,
 )
-
-from .commands import (
+from .write.commands import (
     create_sales_tax_command,
     delete_sales_tax_command,
     create_category_command,
@@ -25,7 +26,7 @@ from .commands import (
     delete_menu_item_command,
 )
 
-from .queries import (
+from .read.queries import (
     get_sales_tax,
     get_sales_taxes,
     get_category,
@@ -39,7 +40,7 @@ from .queries import (
     "/sales_taxes", tags=["Sales Taxes"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class SalesTaxController:
-    app_label = "product_catalogue"
+    app_label = "read"
     model_name = "salestax"
 
     @http_get("/", response=List[SalesTaxReadDto])
@@ -68,7 +69,7 @@ class SalesTaxController:
     "/categories", tags=["Categories"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class CategoryController:
-    app_label = "product_catalogue"
+    app_label = "read"
     model_name = "category"
 
     @http_get("/", response=List[CategoryReadDto])
@@ -95,7 +96,7 @@ class CategoryController:
     "/menu_items", tags=["Menu Items"], auth=JWTAuth(), permissions=[ModelPermission]
 )
 class MenuItemController:
-    app_label = "product_catalogue"
+    app_label = "read"
     model_name = "menuitem"
 
     @http_get("/", response=List[MenuItemReadDto])

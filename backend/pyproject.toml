@@ -19,6 +19,7 @@ psycopg2 = "^2.9.3"
 psycopg = {extras = ["binary"], version = "^3.0.16"}
 django-storages = {extras = ["azure"], version = "^1.13.1"}
 django-environ = "^0.9.0"
+eventsourcing = "^9.2.16"
 
 [tool.poetry.dev-dependencies]
 black = "^22.6.0"

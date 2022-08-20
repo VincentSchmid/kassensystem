@@ -3,7 +3,7 @@ from uuid import UUID, uuid4
 
 from django.db import models
 
-from domain.product_catalogue.models import MenuItem
+from domain.product_catalogue.read.models import MenuItem
 from domain.employee.models import Waiter
 
 

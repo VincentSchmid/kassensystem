@@ -1,12 +1,8 @@
-"""
-Django 4.0.5.
-
-"""
-
 from pathlib import Path
 import environ
 from enum import Enum
 import sys
+import os
 from datetime import timedelta
 
 import dj_database_url
@@ -18,6 +14,14 @@ env = environ.Env(
     JWT_ACCESS_TOKEN_LIFETIME_MINUTES=(int, 120),
     JWT_REFRESH_TOKEN_LIFETIME_DAYS=(int, 1),
 )
+
+os.environ['PERSISTENCE_MODULE'] = 'eventsourcing.postgres'
+
+os.environ['POSTGRES_DBNAME'] = "events"
+os.environ['POSTGRES_HOST'] = "localhost"
+os.environ['POSTGRES_PORT'] = "5432"
+os.environ['POSTGRES_USER'] = "postgres"
+os.environ['POSTGRES_PASSWORD'] = "postgres"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,7 +54,8 @@ INSTALLED_APPS = [
     "ninja_jwt",
     "storages",
     "authentication",
-    "domain.product_catalogue",
+    "domain.product_catalogue.read",
+    "domain.product_catalogue.write",
     "domain.pos",
     "domain.employee",
 ]
@@ -130,11 +135,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "Europe/Zurich"
-
 USE_I18N = True
-
 USE_TZ = True
 
 

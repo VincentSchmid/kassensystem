@@ -28,3 +28,5 @@ class MenuItem(ModifiableEntity):
 
     def __str__(self):
         return self.name
+
+from .events import *

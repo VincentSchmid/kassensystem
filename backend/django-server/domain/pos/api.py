@@ -1,8 +1,7 @@
-from math import perm
 from typing import List
 from uuid import UUID, uuid4
 
-from django.http import Http404, HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse
 from ninja_extra import api_controller, http_get, http_post, http_delete
 from ninja_jwt.authentication import JWTAuth
 from authentication.permissions import ModelPermission

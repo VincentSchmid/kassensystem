@@ -3,7 +3,7 @@ from typing import List
 
 from django.dispatch import Signal, receiver
 from .models import Table, PaymentMethod, Payment, Order, OrderItem
-from domain.product_catalogue.models import MenuItem
+from domain.product_catalogue.read.models import MenuItem
 from domain.employee.models import Waiter
 from .dtos import OrderItemWriteDto
 
